@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import Messages from '../components/chat/messages'
 
-const mapStateToProps = (stage) => {
+const mapStateToProps = (stage, { chatId }) => {
   return {
-    messages: stage.chat.messages,
+    messages: stage.chat.messages.filter((msg) => (msg.from === chatId || msg.to === chatId))
   }
 }
 
