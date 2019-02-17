@@ -30,6 +30,9 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
 
   const addBtnClick = () => {
     submitRef.style.display = 'block'
+    if(editor)
+      editor.destroy()
+
     editor = new JSONEditor(holderRef, {
       schema: formSchema(schemaKey),
       theme: 'bootstrap4'
@@ -39,7 +42,9 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
   const sendMessage = () => {
     let errors = editor.validate()
     if(!errors.length) {
-      createMessage(chatId, editor.getValue())
+      createMessage(editor.getValue())
+      editor.destroy()
+      submitRef.style.display = 'none'
     }
   }
 

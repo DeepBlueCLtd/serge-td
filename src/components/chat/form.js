@@ -28,36 +28,19 @@ const form = {
 }
 
 const properties = {
-  "height": {
-    "title": "PersonHeight",
+  "name": {
+    "title": "PersonName",
     "properties": {
-      "height": {
-        "type": "integer",
-        "default": 12
-      }
-    }
-  },
-  "weight": {
-    "title": "PersonWeight",
-    "properties": {
-      "weight": {
-        "type": "integer",
-        "default": 12
-      }
-    }
-  },
-  "color": {
-    "title": "PersonColor",
-    "properties": {
-      "color": {
+      "name": {
         "type": "string",
-        "format": "color"
+        "format": "string",
+        "default": "John Smith"
       }
     }
   }
 }
 
-export const schemaKeys = ["height", "weight", "color"]
+export const schemaKeys = ["name"]
 
 const getSchema = (schemaKey) => {
   if(schemaKeys.includes(schemaKey)) {
