@@ -1,3 +1,4 @@
+import { persistentReducer } from 'redux-pouchdb'
 import { UPDATE_MESSAGES } from '../actions/chat'
 
 const initialState = {
@@ -15,4 +16,4 @@ const chat = (state = initialState, action) => {
   }
 }
 
-export default chat
+export default persistentReducer(chat)
