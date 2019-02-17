@@ -11,6 +11,18 @@ const Chat = ({ chatId, colorScheme, createMessage, editMessage }) => {
   let holderRef = null
   let submitRef = null
   let schemaKey = schemaKeys[0]
+  let backgroundClass = ""
+
+  switch (colorScheme) {
+    case 'red-theme':
+      backgroundClass = "bg-danger"
+      break;
+    case 'blue-theme':
+      backgroundClass = "bg-primary"
+      break;
+    default:
+      backgroundClass = "bg-default"
+  }
 
   const onSchemaChange = e => {
     schemaKey = e.target.value
@@ -33,7 +45,7 @@ const Chat = ({ chatId, colorScheme, createMessage, editMessage }) => {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className={backgroundClass}>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
             <Button onClick={addBtnClick}>Add</Button>
@@ -48,7 +60,7 @@ const Chat = ({ chatId, colorScheme, createMessage, editMessage }) => {
       </CardBody>
       <CardFooter>
         <div ref={holder => { holderRef = holder }}/>
-        <div style={{display:  'none'}} ref={submit => { submitRef = submit }}>
+        <div style={{display: 'none'}} ref={submit => { submitRef = submit }}>
           <Button onClick={sendMessage}>Send</Button>
         </div>
       </CardFooter>
