@@ -11,7 +11,7 @@ import { persistentStore } from 'redux-pouchdb'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-const db = new PouchDB('dbname')
+const db = new PouchDB('SergeTd')
 
 const applyMiddlewares = applyMiddleware(
   thunk
