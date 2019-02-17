@@ -5,7 +5,7 @@ import formSchema, { schemaKeys } from './form'
 import JSONEditor from '@json-editor/json-editor'
 import Messages from '../../containers/messages'
 
-const Chat = ({ chatId, colorScheme, createMessage, editMessage }) => {
+const Chat = ({ chatId, colorScheme, createMessage }) => {
 
   let editor = null
   let holderRef = null
@@ -71,8 +71,7 @@ const Chat = ({ chatId, colorScheme, createMessage, editMessage }) => {
 Chat.propTypes = {
   chatId: PropTypes.string.isRequired,
   colorScheme: PropTypes.string,
-  createMessage: PropTypes.func.isRequired,
-  editMessage: PropTypes.func.isRequired,
+  createMessage: PropTypes.func.isRequired
 }
 
 export default Chat

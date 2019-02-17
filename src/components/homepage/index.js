@@ -3,6 +3,7 @@ import { css } from 'aphrodite/no-important';
 import styles from './styles'
 import { Container, Row, Col } from 'reactstrap'
 import Chat from '../../containers/chat'
+import Control from '../../containers/control'
 
 const Homepage = () => {
   return (
@@ -16,11 +17,7 @@ const Homepage = () => {
             <Chat id="red"/>
           </Col>
         </Row>
-        <Row>
-          <Col md={6}>
-            Buttons
-          </Col>
-        </Row>
+        <Control/>
       </div>
     </Container>
   )
