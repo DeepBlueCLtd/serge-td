@@ -10,10 +10,10 @@ const Homepage = () => {
       <div className={css(styles.main)}>
         <Row>
           <Col md={6}>
-            <Chat/>
+            <Chat id="blue"/>
           </Col>
           <Col md={6}>
-            <Chat/>
+            <Chat id="red"/>
           </Col>
         </Row>
         <Row>

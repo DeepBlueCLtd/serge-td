@@ -29,7 +29,6 @@ const Chat = ({ chatId, colorScheme, createMessage, editMessage }) => {
     if(!errors.length) {
       createMessage(chatId, editor.getValue())
     }
-    // createMessage()
   }
 
   return (
@@ -44,7 +43,7 @@ const Chat = ({ chatId, colorScheme, createMessage, editMessage }) => {
       </CardHeader>
       <CardBody>
         <div className="messages">
-          <Messages/>
+          <Messages chatId={chatId}/>
         </div>
       </CardBody>
       <CardFooter>
