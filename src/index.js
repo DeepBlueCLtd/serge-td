@@ -1,15 +1,32 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
 import Root from './components/root'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@json-editor/json-editor/src/styles/starrating.css'
 import reducers from './reducers'
 import PouchDB from 'pouchdb-browser'
+import thunk from 'redux-thunk'
+import { persistentStore } from 'redux-pouchdb'
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
-const store = createStore(reducers);
-window.DB = new PouchDB('mydb')
+const db = new PouchDB('dbname')
+
+const applyMiddlewares = applyMiddleware(
+  thunk
+)
+
+const changeHandler = (data) => {
+  console.log('PouchDB:', data)
+}
+
+const createStoreWithMiddleware = composeWithDevTools(
+  applyMiddlewares,
+  persistentStore(db, changeHandler)
+)(createStore)
+
+const store = createStoreWithMiddleware(reducers)
 
 ReactDOM.render(
   <Root store={store}/>,
