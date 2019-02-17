@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
 import ScrollArea from 'react-scrollbar'
-import { Badge } from 'reactstrap'
 
 const ChatMessages = ({ messages, chatId }) => {
 
