@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import chat from './chat'
-import control from './control'
+import messageTypes from './messageTypes'
 
 export default combineReducers({
-  chat, control
+  chat, messageTypes
 })
