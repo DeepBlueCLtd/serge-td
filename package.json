@@ -16,7 +16,7 @@
     "react-scrollbar": "^0.5.4",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
-    "redux-pouchdb": "^0.1.4",
+    "redux-pouchdb-plus": "^0.11.1",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
