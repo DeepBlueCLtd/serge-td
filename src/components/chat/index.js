@@ -1,7 +1,7 @@
 import React from 'react'
-import { Card, CardHeader, CardFooter, CardBody, Button, Input, InputGroup, InputGroupAddon  } from 'reactstrap'
+import { Card, CardHeader, CardFooter, CardBody, Button, InputGroup, InputGroupAddon  } from 'reactstrap'
 import PropTypes from 'prop-types'
-import formSchema, { schemaKeys } from './form'
+import formSchema from './schema'
 import JSONEditor from '@json-editor/json-editor'
 import Messages from '../../containers/messages'
 
@@ -10,7 +10,6 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
   let editor = null
   let holderRef = null
   let submitRef = null
-  let schemaKey = schemaKeys[0]
   let backgroundClass = ""
 
   switch (colorScheme) {
@@ -24,17 +23,13 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
       backgroundClass = "bg-default"
   }
 
-  const onSchemaChange = e => {
-    schemaKey = e.target.value
-  }
-
   const addBtnClick = () => {
     submitRef.style.display = 'block'
     if(editor)
       editor.destroy()
 
     editor = new JSONEditor(holderRef, {
-      schema: formSchema(schemaKey),
+      schema: formSchema(chatId),
       theme: 'bootstrap4'
     })
   }
@@ -53,9 +48,8 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
       <CardHeader className={backgroundClass}>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
-            <Button onClick={addBtnClick}>Add</Button>
+            <Button onClick={addBtnClick}>Add >></Button>
           </InputGroupAddon>
-          <Input onChange={onSchemaChange} type="select">{schemaKeys.map(item => (<option key={item} value={item}>{item}</option>))}</Input>
         </InputGroup>
       </CardHeader>
       <CardBody>
