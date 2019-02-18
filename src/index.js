@@ -7,23 +7,19 @@ import '@json-editor/json-editor/src/styles/starrating.css'
 import reducers from './reducers'
 import PouchDB from 'pouchdb-browser'
 import thunk from 'redux-thunk'
-import { persistentStore } from 'redux-pouchdb'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { persistentStore } from 'redux-pouchdb-rethink'
 
-const db = new PouchDB('SergeTd')
+const db = new PouchDB('messages')
 
 const applyMiddlewares = applyMiddleware(
   thunk
 )
 
-const changeHandler = (data) => {
-  console.log('PouchDB:', data)
-}
-
 const createStoreWithMiddleware = composeWithDevTools(
   applyMiddlewares,
-  persistentStore(db, changeHandler)
+  persistentStore({db})
 )(createStore)
 
 const store = createStoreWithMiddleware(reducers)

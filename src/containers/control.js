@@ -3,7 +3,7 @@ import { createMessage, removeAllMessages } from '../actions/chat'
 
 import Control from '../components/chat/control'
 
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({messageTypes: state.messageTypes})
 
 const mapDispatchToProps = dispatch => {
 

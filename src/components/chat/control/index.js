@@ -5,7 +5,6 @@ import JSONEditor from '@json-editor/json-editor'
 
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
-import formSchema, { schemaKeys } from './form'
 
 class ChatControll extends Component {
   constructor(props, content) {
@@ -29,7 +28,7 @@ class ChatControll extends Component {
 
       this.setState({activeSchema: e.target.name})
       this.editor = new JSONEditor(this.editorRef.current, {
-        schema: formSchema(e.target.name),
+        schema: this.props.messageTypes[e.target.name],
         theme: 'bootstrap4'
       })
     }
@@ -59,15 +58,15 @@ class ChatControll extends Component {
               <CardBody>
                 <p>Inject Messages:</p>
                 <ListGroup>
-                  {schemaKeys.map(schema => (
+                  {this.props.messageTypes.map((schema, key) => (
                     <ListGroupItem
-                      key={schema}
+                      key={key}
                       tag="button"
-                      active={schema === this.state.activeSchema}
+                      active={key === parseInt(this.state.activeSchema)}
                       onClick={this.newMessageForm}
-                      name={schema}
+                      name={key}
                     >
-                      {schema}
+                      {schema.title}
                     </ListGroupItem>
                   ))}
                 </ListGroup>
@@ -96,6 +95,7 @@ class ChatControll extends Component {
 }
 
 ChatControll.propTypes = {
+  messageTypes: PropTypes.array,
   clearMessages: PropTypes.func.isRequired,
   createMessage: PropTypes.func.isRequired
 }
