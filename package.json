@@ -6,6 +6,7 @@
     "@json-editor/json-editor": "^1.3.3",
     "aphrodite": "^2.2.3",
     "bootstrap": "^4.3.1",
+    "immutable": "^4.0.0-rc.12",
     "pouchdb-browser": "^7.0.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
@@ -16,7 +17,7 @@
     "react-scrollbar": "^0.5.4",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
-    "redux-pouchdb-plus": "^0.11.1",
+    "redux-pouchdb-rethink": "^1.1.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
