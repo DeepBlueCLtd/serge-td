@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
-import ScrollArea from 'react-scrollbar'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const ChatMessages = ({ messages, chatId }) => {
 
@@ -45,17 +45,19 @@ const ChatMessages = ({ messages, chatId }) => {
 
   return (
     <div className={css(styles.main)}>
-        <ScrollArea
-          smoothScrolling={true}
-          time={1}
-          horizontal={false}
+      <div className={css(styles.scrollbar)}>
+        <PerfectScrollbar
+          suppressScrollX={true}
           className={css(styles.container)}
           contentClassName={css(styles.scrolContent)}
         >
-          {messages.map((msg, key) => (
-            <div key={key}>{Item(msg)}</div>
-          ))}
-        </ScrollArea>
+          <div className={css(styles.scrolContent)}>
+            {messages.map((msg, key) => (
+              <div key={key}>{Item(msg)}</div>
+            ))}
+          </div>
+        </PerfectScrollbar>
+      </div>
     </div>
   )
 }
