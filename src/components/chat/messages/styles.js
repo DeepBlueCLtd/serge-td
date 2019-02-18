@@ -3,12 +3,34 @@ import { StyleSheet } from 'aphrodite/no-important'
 export default StyleSheet.create({
   main: {
     height: '320px',
-    overflow: 'hidden',
-    position: 'relative'
+    position: 'relative',
+    paddingTop: '0.1px',
+    ":after": {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      width: "100%",
+      height: '20px',
+      top: '100%',
+      background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%)",
+      left: '0',
+    },
+    ":before": {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      width: "100%",
+      height: '20px',
+      bottom: '100%',
+      left: '0',
+      zIndex: '2',
+      background: "linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
+    }
   },
   container: {
     position: 'absolute',
     maxHeight: '100%',
+    height: 'auto',
     left: '0',
     bottom: '0',
     width: '100%'
@@ -18,7 +40,7 @@ export default StyleSheet.create({
     verticalAligin: 'top',
   },
   scrolContent: {
-    paddingRight: '10px'
+    padding: '20px'
   },
   badge: {
     fontSize: '16px',
@@ -48,5 +70,13 @@ export default StyleSheet.create({
   },
   message: {
     position: 'relative'
+  },
+  scrollbar: {
+    boxSizing: 'content-box',
+    width: '100%',
+    padding: '20px',
+    margin: '-20px 0 0 -20px',
+    position: 'relative',
+    height: '100%'
   }
 })
