@@ -1,4 +1,4 @@
-import { persistentReducer } from 'redux-pouchdb-plus'
+import { persistentReducer } from 'redux-pouchdb-rethink'
 import PouchDB from 'pouchdb-browser'
 import formSchema, { schemaKeys } from './messageTypesDefault'
 

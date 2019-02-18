@@ -9,7 +9,7 @@ import PouchDB from 'pouchdb-browser'
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { persistentStore } from 'redux-pouchdb-plus';
+import { persistentStore } from 'redux-pouchdb-rethink'
 
 const db = new PouchDB('messages')
 

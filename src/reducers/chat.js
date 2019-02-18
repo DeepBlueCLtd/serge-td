@@ -1,5 +1,5 @@
-import { persistentReducer } from 'redux-pouchdb-plus'
-//import { persistentReducer } from 'redux-pouchdb'
+import { persistentReducer } from 'redux-pouchdb-rethink'
+
 import { UPDATE_MESSAGES, REMOVE_ALL_MESSAGES } from '../actions/chat'
 
 const initialState = {
