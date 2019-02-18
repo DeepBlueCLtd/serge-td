@@ -74,7 +74,6 @@ export default StyleSheet.create({
   scrollbar: {
     boxSizing: 'content-box',
     width: '100%',
-    height: '100%',
     padding: '20px',
     margin: '-20px 0 0 -20px',
     position: 'relative',
