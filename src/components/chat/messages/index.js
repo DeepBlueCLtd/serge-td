@@ -1,35 +1,68 @@
-import React from 'react'
+import React, { Component, createRef } from 'react'
 import PropTypes from 'prop-types'
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
-const ChatMessages = ({ messages, chatId }) => {
+class ChatMessages extends Component {
+  constructor(props, content) {
+    super(props, content)
 
-  const schemes = {
-    red: {
-      chatColor: "bg-danger",
-      fromColor: "bg-primary"
-    },
-    blue: {
-      chatColor: "bg-primary",
-      fromColor: "bg-danger"
+    this.colorScheme = {
+      red: {
+        chatColor: "bg-danger",
+        fromColor: "bg-primary"
+      },
+      blue: {
+        chatColor: "bg-primary",
+        fromColor: "bg-danger"
+      }
     }
+
+    this.timeId = null
+    this.scrolledDown = true
+    this.scrollbar = createRef()
+
+    this.onScrollUp = this.onScrollUp.bind(this)
+    this.onYReachEnd = this.onYReachEnd.bind(this)
+    this.scrollToDown = this.scrollToDown.bind(this)
   }
 
-  const Item = message => {
+  onScrollUp() {
+    this.scrolledDown = false
+  }
 
-    const fromChat = message.from === chatId
+  onYReachEnd() {
+    this.scrolledDown = true
+  }
 
-    let color = schemes[chatId].fromColor
+  scrollToDown() {
+    if(this.timeId)
+      clearTimeout(this.timeId)
+
+    this.timeId = setTimeout(() => {
+      if(this.scrolledDown) {
+        this.scrollbar.current._container.scrollTop = this.scrollbar.current._container.scrollHeight
+      }
+    })
+  }
+
+  componentWillReceiveProps() {
+    this.scrollToDown()
+  }
+
+  renderItem(message) {
+    const fromChat = message.from === this.props.chatId
+
+    let color = this.colorScheme[this.props.chatId].fromColor
     let itemStyles = {}
 
     if(fromChat) {
-      color = schemes[chatId].chatColor
+      color = this.colorScheme[this.props.chatId].chatColor
       itemStyles = { textAlign: 'right' }
     }
 
-    return (
+    return(
       <div style={itemStyles}>
         <div className={css(styles.item)}>
           <div className={css(styles.badge, (!fromChat) && styles.badgeLeft)}>
@@ -43,23 +76,28 @@ const ChatMessages = ({ messages, chatId }) => {
     )
   }
 
-  return (
-    <div className={css(styles.main)}>
-      <div className={css(styles.scrollbar)}>
-        <PerfectScrollbar
-          suppressScrollX={true}
-          className={css(styles.container)}
-          contentClassName={css(styles.scrolContent)}
-        >
-          <div className={css(styles.scrolContent)}>
-            {messages.map((msg, key) => (
-              <div key={key}>{Item(msg)}</div>
-            ))}
-          </div>
-        </PerfectScrollbar>
+  render() {
+    return (
+      <div className={css(styles.main)}>
+        <div className={css(styles.scrollbar)}>
+          <PerfectScrollbar
+            ref={this.scrollbar}
+            onYReachEnd={this.onYReachEnd}
+            onScrollUp={this.onScrollUp}
+            suppressScrollX={true}
+            className={css(styles.container)}
+            contentClassName={css(styles.scrolContent)}
+          >
+            <div className={css(styles.scrolContent)}>
+              {this.props.messages.map((msg, key) => (
+                <div key={key}>{this.renderItem(msg)}</div>
+              ))}
+            </div>
+          </PerfectScrollbar>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 ChatMessages.propTypes = {
