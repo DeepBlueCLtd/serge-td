@@ -3,7 +3,7 @@ import Messages from '../components/chat/messages'
 
 const mapStateToProps = (stage, { chatId }) => {
   return {
-    messages: stage.chat.filter((msg) => (msg.from === chatId || msg.to === chatId))
+    messages: Array.isArray(stage.chat) ? stage.chat.filter((msg) => (msg.from === chatId || msg.to === chatId)) : []
   }
 }
 
