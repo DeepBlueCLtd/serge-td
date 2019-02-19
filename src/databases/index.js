@@ -1,6 +1,19 @@
 import PouchDB from 'pouchdb-browser'
 import pouchdbFullSync from 'pouchdb-full-sync'
-import options from './config-local.json'
+import defaultOptions from './config-default.json'
+let options;
+
+try {
+ options = require('./config-local.json')
+}
+catch (e) {
+ options = {}
+}
+
+options = {
+  ...defaultOptions,
+  ...options
+}
 
 PouchDB.plugin(pouchdbFullSync)
 
