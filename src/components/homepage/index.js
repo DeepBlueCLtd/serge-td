@@ -7,7 +7,7 @@ import Control from '../../containers/control'
 
 const Homepage = () => {
   return (
-    <Container>
+    <Container fluid>
       <div className={css(styles.main)}>
         <Row>
           <Col md={6}>
