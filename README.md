@@ -12,7 +12,6 @@ Recommends to run it after git pull requests.
 ### `npm cfgen`
 
 Generate local server config files.
-Recommends to run it after git pull requests.
 
 ### `npm cfgen-force`
 
