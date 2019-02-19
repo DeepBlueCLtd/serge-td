@@ -6,17 +6,17 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '@json-editor/json-editor/src/styles/starrating.css'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import reducers from './reducers'
-import PouchDB from 'pouchdb-browser'
+import { persistentStore } from 'redux-pouchdb-rethink'
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { persistentStore } from 'redux-pouchdb-rethink'
-
-const db = new PouchDB('messages')
+import getDb from './databases'
 
 const applyMiddlewares = applyMiddleware(
   thunk
 )
+
+const db = getDb('main')
 
 const createStoreWithMiddleware = composeWithDevTools(
   applyMiddlewares,
