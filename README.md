@@ -12,6 +12,7 @@ Recommends to run it after git pull requests.
 ### `npm cfgen`
 
 Generate local server config files.
+**Note: this command will be automatically run on heroku build before `npm start`**
 
 ### `npm cfgen-force`
 
