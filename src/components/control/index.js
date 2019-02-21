@@ -14,7 +14,7 @@ class ChatControll extends Component {
     this.chats = [
       {chatId: "red", title:"Red Chat", color: "bg-danger", active: 1},
       {chatId: "blue", title:"Blue Chat", color: "bg-primary", active: 1},
-      {chatId: "white", title:"White Chat", color: "bg-primary", active: 0}
+      {chatId: "white", title:"White Chat", color: "bg-primary", active: 1}
     ]
     this.newMessageForm = this.newMessageForm.bind(this)
     this.closeMessageForm = this.closeMessageForm.bind(this)
