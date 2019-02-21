@@ -4,17 +4,17 @@ import styles from './styles'
 import { Container, Row, Col } from 'reactstrap'
 import Chat from '../../containers/chat'
 import Control from '../../containers/control'
-import Chats from '../../containers/chatlist'
 
-const Homepage = () => {
+const Chatlist = () => {
   return (
-    <Container fluid>
-      <div className={css(styles.main)}>
-        <Chats/>
-        <Control/>
-      </div>
-    </Container>
+    <Row>
+      <Col md={6}>
+        <div className={css(styles.chatItem)}>
+          <Chat id="blue"/>
+        </div>
+      </Col>
+    </Row>
   )
 }
 
-export default Homepage
+export default Chatlist

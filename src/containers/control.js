@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { createMessage, removeAllMessages } from '../actions/chat'
+import { createMessage, removeAllMessages } from '../actions/messages'
 
 import Control from '../components/chat/control'
 
