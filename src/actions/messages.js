@@ -2,15 +2,16 @@
  * action types
  */
 
-export const UPDATE_MESSAGES = "UPDATE_MESSAGES"
+export const PUSH_MESSAGES = "PUSH_MESSAGES"
 export const REMOVE_ALL_MESSAGES = "REMOVE_ALL_MESSAGES"
+export const GENERATE_RANDOM_MESSAGES = "PUSH_MESSAGES"
 
 /*
  * action creators
  */
 
-export function createMessage(message) {
-  return { type: UPDATE_MESSAGES, payload: { message: message } }
+export function createMessages(messages) {
+  return { type: PUSH_MESSAGES, payload: { messages: messages } }
 }
 
 export function removeAllMessages() {

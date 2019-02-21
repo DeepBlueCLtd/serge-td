@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { createMessage, removeAllMessages } from '../actions/messages'
+import { createMessages, removeAllMessages } from '../actions/messages'
 import { createChat, removeChat } from '../actions/chats'
 
 import Control from '../components/control'
@@ -12,8 +12,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
 
   return {
-    createMessage: (message) => {
-      dispatch(createMessage(message))
+    createMessages: (messages) => {
+      dispatch(createMessages(messages))
     },
     clearMessages: () => {
       dispatch(removeAllMessages())

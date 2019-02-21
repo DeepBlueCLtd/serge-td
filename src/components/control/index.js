@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col, Card, CardHeader, CardBody, CardFooter, Button, ListGroup, ListGroupItem } from 'reactstrap'
 import JSONEditor from '@json-editor/json-editor'
+import loremIpsum from 'lorem-ipsum'
 
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
@@ -13,11 +14,12 @@ class ChatControll extends Component {
     this.chats = [
       {chatId: "red", title:"Red Chat", color: "bg-danger", active: 1},
       {chatId: "blue", title:"Blue Chat", color: "bg-primary", active: 1},
-      {chatId: "white", title:"White Chat", color: "bg-primary", active: 1}
+      {chatId: "white", title:"White Chat", color: "bg-primary", active: 0}
     ]
     this.newMessageForm = this.newMessageForm.bind(this)
     this.closeMessageForm = this.closeMessageForm.bind(this)
     this.injectForm = this.injectForm.bind(this)
+    this.generateMessages = this.generateMessages.bind(this)
     this.filterCreateChatBtns = this.filterCreateChatBtns.bind(this)
     this.editor = null
     this.editorRef = React.createRef()
@@ -29,7 +31,39 @@ class ChatControll extends Component {
   }
 
   filterCreateChatBtns() {
-    return this.chats
+    return this.chats.filter(chat => chat.active)
+  }
+
+  generateMessages() {
+    this.props.createMessages(Array.apply(null, Array(100)).map(() => {
+      const messageType = this.props.messageTypes[Math.floor(Math.random()*this.props.messageTypes.length)]
+      return messageType.required.reduce((map, field) => {
+
+        let value = ""
+        const enumArr = messageType.properties[field].enum;
+        if(Array.isArray(enumArr) && enumArr.length) {
+          value = enumArr[Math.floor(Math.random()*enumArr.length)]
+        }
+        else if(messageType.properties[field].format === "color") {
+          value = '#'+Math.floor(Math.random()*16777215).toString(16)
+        }
+        else {
+          switch (messageType.properties[field].type) {
+            case "integer":
+              value = Math.floor(Math.random()*999)
+              break;
+            case "string":
+              value = loremIpsum({count: 1})
+              break;
+            default:
+              value = messageType.properties[field].default || loremIpsum({count: 1})
+          }
+        }
+
+        map[field] = value
+        return map
+      }, {})
+    }));
   }
 
   newMessageForm(e) {
@@ -38,6 +72,7 @@ class ChatControll extends Component {
         this.editor.destroy()
 
       this.setState({activeSchema: e.target.name})
+
       this.editor = new JSONEditor(this.editorRef.current, {
         schema: this.props.messageTypes[e.target.name],
         theme: 'bootstrap4'
@@ -54,7 +89,7 @@ class ChatControll extends Component {
 
   injectForm() {
     if(!(this.editor.validate()).length) {
-      this.props.createMessage(this.editor.getValue())
+      this.props.createMessages([this.editor.getValue()])
       this.closeMessageForm()
     }
   }
@@ -106,6 +141,9 @@ class ChatControll extends Component {
                 </ListGroup>
               </CardBody>}
               <CardFooter>
+                <Button block color="success" onClick={this.generateMessages}>Generate Messages</Button>
+              </CardFooter>
+              <CardFooter>
                 <Button block color="danger" onClick={this.props.clearMessages}>Clear Messages</Button>
               </CardFooter>
             </Card>
@@ -131,7 +169,7 @@ class ChatControll extends Component {
 ChatControll.propTypes = {
   messageTypes: PropTypes.array,
   clearMessages: PropTypes.func.isRequired,
-  createMessage: PropTypes.func.isRequired,
+  createMessages: PropTypes.func.isRequired,
   createChat: PropTypes.func.isRequired,
   removeChat: PropTypes.func.isRequired,
   chats: PropTypes.array,
