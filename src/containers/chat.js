@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Chat from '../components/chat'
-import { createMessage } from '../actions/messages'
+import { createMessages } from '../actions/messages'
 
 const mapStateToProps = (stage, { id }) => {
 
@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => {
 
   return {
     createMessage: (message) => {
-      dispatch(createMessage(message))
+      dispatch(createMessages([message]))
     }
   }
 }
