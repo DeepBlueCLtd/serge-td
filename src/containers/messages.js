@@ -11,9 +11,9 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-const ChatContainer = connect(
+const MessagesContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Messages)
 
-export default ChatContainer
+export default MessagesContainer
