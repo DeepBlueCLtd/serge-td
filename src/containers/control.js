@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { createMessage, removeAllMessages } from '../actions/messages'
-import { createChat } from '../actions/chats'
+import { createChat, removeChat } from '../actions/chats'
 
 import Control from '../components/control'
 
 const mapStateToProps = state => ({
   messageTypes: state.messageTypes,
-  chats: state.chats.map((chat) => chat.id)
+  chats: state.chats.map((chat) => chat && chat.id)
 })
 
 const mapDispatchToProps = dispatch => {
@@ -20,6 +20,9 @@ const mapDispatchToProps = dispatch => {
     },
     createChat: (chat) => {
       dispatch(createChat(chat))
+    },
+    removeChat: (id) => {
+      dispatch(removeChat(id))
     }
   }
 }
