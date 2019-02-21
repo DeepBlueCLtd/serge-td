@@ -1,18 +1,19 @@
 import React from 'react'
 import { css } from 'aphrodite/no-important';
 import styles from './styles'
-import { Container, Row, Col } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import Chat from '../../containers/chat'
-import Control from '../../containers/control'
 
-const Chatlist = () => {
+const Chatlist = ({ chats }) => {
   return (
     <Row>
-      <Col md={6}>
-        <div className={css(styles.chatItem)}>
-          <Chat id="blue"/>
-        </div>
-      </Col>
+      {chats.map(chat => (
+        <Col md={6}>
+          <div className={css(styles.chatItem)}>
+            <Chat id={chat.id}/>
+          </div>
+        </Col>
+      ))}
     </Row>
   )
 }

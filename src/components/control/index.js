@@ -10,15 +10,26 @@ class ChatControll extends Component {
   constructor(props, content) {
     super(props, content)
 
-    this.state = {
-      activeSchema: null,
-    }
-
+    this.chats = [
+      {chatId: "red", title:"Red Chat", color: "bg-danger", active: 1},
+      {chatId: "blue", title:"Blue Chat", color: "bg-primary", active: 1},
+      {chatId: "white", title:"White Chat", color: "bg-primary", active: 1}
+    ]
     this.newMessageForm = this.newMessageForm.bind(this)
     this.closeMessageForm = this.closeMessageForm.bind(this)
     this.injectForm = this.injectForm.bind(this)
+    this.filterCreateChatBtns = this.filterCreateChatBtns.bind(this)
     this.editor = null
     this.editorRef = React.createRef()
+
+    this.state = {
+      activeSchema: null,
+      createChats: this.filterCreateChatBtns()
+    }
+  }
+
+  filterCreateChatBtns() {
+    return this.chats
   }
 
   newMessageForm(e) {
@@ -71,6 +82,20 @@ class ChatControll extends Component {
                   ))}
                 </ListGroup>
               </CardBody>
+              {this.state.createChats.length && <CardBody>
+                <p>Create chats:</p>
+                <ListGroup>
+                  {this.state.createChats.map((chat, key) => (
+                    <ListGroupItem
+                      key={key}
+                      tag="button"
+                      onClick={() => { this.props.createChat(chat)}}
+                    >
+                      {chat.title}
+                    </ListGroupItem>
+                  ))}
+                </ListGroup>
+              </CardBody>}
               <CardFooter>
                 <Button block color="danger" onClick={this.props.clearMessages}>Clear Messages</Button>
               </CardFooter>
@@ -97,7 +122,9 @@ class ChatControll extends Component {
 ChatControll.propTypes = {
   messageTypes: PropTypes.array,
   clearMessages: PropTypes.func.isRequired,
-  createMessage: PropTypes.func.isRequired
+  createMessage: PropTypes.func.isRequired,
+  createChat: PropTypes.func.isRequired,
+  chats: PropTypes.array,
 }
 
 export default ChatControll
