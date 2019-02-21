@@ -85,15 +85,24 @@ class ChatControll extends Component {
               {this.state.createChats.length && <CardBody>
                 <p>Create chats:</p>
                 <ListGroup>
-                  {this.state.createChats.map((chat, key) => (
-                    <ListGroupItem
-                      key={key}
-                      tag="button"
-                      onClick={() => { this.props.createChat(chat)}}
-                    >
-                      {chat.title}
-                    </ListGroupItem>
-                  ))}
+                  {this.state.createChats.map((chat, key) => {
+                    const active = this.props.chats.includes(chat.chatId)
+                    return (
+                      <ListGroupItem
+                        key={key}
+                        tag="button"
+                        active={active}
+                        onClick={() => {
+                          if (active)
+                            this.props.removeChat(chat.chatId)
+                          else
+                            this.props.createChat(chat)
+                        }}
+                      >
+                        {chat.title}
+                      </ListGroupItem>
+                    )
+                  })}
                 </ListGroup>
               </CardBody>}
               <CardFooter>
@@ -124,6 +133,7 @@ ChatControll.propTypes = {
   clearMessages: PropTypes.func.isRequired,
   createMessage: PropTypes.func.isRequired,
   createChat: PropTypes.func.isRequired,
+  removeChat: PropTypes.func.isRequired,
   chats: PropTypes.array,
 }
 
