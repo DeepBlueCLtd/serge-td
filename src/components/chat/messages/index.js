@@ -9,14 +9,9 @@ class ChatMessages extends Component {
     super(props, content)
 
     this.colorScheme = {
-      red: {
-        chatColor: "bg-danger",
-        fromColor: "bg-primary"
-      },
-      blue: {
-        chatColor: "bg-primary",
-        fromColor: "bg-danger"
-      }
+      red: "bg-danger",
+      blue: "bg-primary",
+      white: "bg-secondary"
     }
 
     this.timeId = null
@@ -54,11 +49,10 @@ class ChatMessages extends Component {
   renderItem(message) {
     const fromChat = message.from === this.props.chatId
 
-    let color = this.colorScheme[this.props.chatId].fromColor
+    let color = this.colorScheme[message.from]
     let itemStyles = {}
 
     if(fromChat) {
-      color = this.colorScheme[this.props.chatId].chatColor
       itemStyles = { textAlign: 'right' }
     }
 
