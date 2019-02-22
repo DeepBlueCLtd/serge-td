@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Row, Col, Card, CardHeader, CardBody, CardFooter, Button, ListGroup, ListGroupItem } from 'reactstrap'
 import JSONEditor from '@json-editor/json-editor'
 import loremIpsum from 'lorem-ipsum'
+import { getGameControlChats } from '../../defaults/allowedChats'
 
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
@@ -11,27 +12,17 @@ class ChatControll extends Component {
   constructor(props, content) {
     super(props, content)
 
-    this.chats = [
-      {chatId: "red", title:"Red Chat", color: "bg-danger", active: 1},
-      {chatId: "blue", title:"Blue Chat", color: "bg-primary", active: 1},
-      {chatId: "white", title:"White Chat", color: "bg-primary", active: 1}
-    ]
     this.newMessageForm = this.newMessageForm.bind(this)
     this.closeMessageForm = this.closeMessageForm.bind(this)
     this.injectForm = this.injectForm.bind(this)
     this.generateMessages = this.generateMessages.bind(this)
-    this.filterCreateChatBtns = this.filterCreateChatBtns.bind(this)
     this.editor = null
     this.editorRef = React.createRef()
 
     this.state = {
       activeSchema: null,
-      createChats: this.filterCreateChatBtns()
+      createChats: getGameControlChats()
     }
-  }
-
-  filterCreateChatBtns() {
-    return this.chats.filter(chat => chat.active)
   }
 
   generateMessages() {
@@ -117,7 +108,7 @@ class ChatControll extends Component {
                   ))}
                 </ListGroup>
               </CardBody>
-              {this.state.createChats.length && <CardBody>
+              {(!!this.state.createChats.length) && <CardBody>
                 <p>Create chats:</p>
                 <ListGroup>
                   {this.state.createChats.map((chat, key) => {
