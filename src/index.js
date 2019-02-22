@@ -10,7 +10,7 @@ import { persistentStore } from 'redux-pouchdb-rethink'
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import getDb from './databases'
+import getDb from './databases' 
 
 const applyMiddlewares = applyMiddleware(
   thunk
