@@ -1,8 +1,5 @@
-const chats = [
-  "red",
-  "blue",
-  "white"
-]
+import { getToFromKeys } from './allowedChats'
+const chats = getToFromKeys()
 
 const form = {
   "type": "object",
