@@ -1,14 +1,14 @@
 import { persistentReducer } from 'redux-pouchdb-rethink'
 import getDb from '../databases'
-import { UPDATE_MESSAGES, REMOVE_ALL_MESSAGES } from '../actions/chat'
+import { PUSH_MESSAGES, REMOVE_ALL_MESSAGES } from '../actions/messages'
 
 const initialState = []
 
-const chat = (state = initialState, action) => {
+const nessages = (state = initialState, action) => {
 
   switch (action.type) {
-    case UPDATE_MESSAGES:
-      return [...state, action.payload.message]
+    case PUSH_MESSAGES:
+      return [...state, ...action.payload.messages]
     case REMOVE_ALL_MESSAGES:
       return []
     default:
@@ -18,4 +18,4 @@ const chat = (state = initialState, action) => {
 
 const db = getDb('messages')
 
-export default persistentReducer(chat, {db: db})
+export default persistentReducer(nessages, {db: db})

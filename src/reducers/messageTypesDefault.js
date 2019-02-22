@@ -1,3 +1,9 @@
+const chats = [
+  "red",
+  "blue",
+  "white"
+]
+
 const form = {
   "type": "object",
   "required": [
@@ -8,17 +14,11 @@ const form = {
   "properties": {
     "from": {
       "type": "string",
-      "enum": [
-        "red",
-        "blue"
-      ]
+      "enum": chats
     },
     "to": {
       "type": "string",
-      "enum": [
-        "red",
-        "blue"
-      ]
+      "enum": chats
     },
     "title": {
       "type": "string",
