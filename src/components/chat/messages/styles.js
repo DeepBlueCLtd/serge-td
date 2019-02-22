@@ -44,9 +44,9 @@ export default StyleSheet.create({
   },
   badge: {
     fontSize: '16px',
-    lineHeight: '1.2',
+    lineHeight: '20px',
     padding: '5px 15px',
-    borderRadius: '55555px 0 55555px 55555px',
+    borderRadius: '15px 0 15px 15px',
     position: 'relative',
     overflow: 'hidden',
     display: 'inline-block',
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     }
   },
   badgeLeft: {
-    borderRadius: '0 55555px 55555px 55555px',
+    borderRadius: '0 15px 15px 15px',
   },
   badgeBg: {
     opacity: '0.8',
