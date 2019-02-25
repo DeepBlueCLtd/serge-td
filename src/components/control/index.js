@@ -63,9 +63,11 @@ class ChatControll extends Component {
         this.editor.destroy()
 
       this.setState({activeSchema: e.target.name})
+      let schema = this.props.messageTypes[e.target.name]
+      schema.properties.from.enum = schema.properties.from.enum.sort((x, y) => (x === "white" ? -1 : y === "white" ? 1 : 0))
 
       this.editor = new JSONEditor(this.editorRef.current, {
-        schema: this.props.messageTypes[e.target.name],
+        schema: schema,
         theme: 'bootstrap4'
       })
     }
@@ -125,7 +127,7 @@ class ChatControll extends Component {
                             this.props.createChat(chat)
                         }}
                       >
-                        {chat.title}
+                        {chat.label}
                       </ListGroupItem>
                     )
                   })}

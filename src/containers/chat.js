@@ -2,15 +2,9 @@ import { connect } from 'react-redux'
 import Chat from '../components/chat'
 import { createMessages } from '../actions/messages'
 
-const mapStateToProps = (stage, { id }) => {
-
-  let chatId = id || 'default'
-
-  return {
-    chatId: chatId,
-    colorScheme: chatId + '-theme'
-  }
-}
+const mapStateToProps = (stage, { id }) => ({
+  chatId: id
+})
 
 const mapDispatchToProps = dispatch => {
 

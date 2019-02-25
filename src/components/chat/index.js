@@ -1,27 +1,19 @@
 import React from 'react'
 import { Card, CardHeader, CardFooter, CardBody, Button, InputGroup, InputGroupAddon  } from 'reactstrap'
 import PropTypes from 'prop-types'
-import formSchema from './schema'
 import JSONEditor from '@json-editor/json-editor'
 import Messages from '../../containers/messages'
+import ChatColorScheme from '../../defaults/schemeColors/chatScheme'
+import { css } from 'aphrodite/no-important'
+import styles from './styles'
 
-const Chat = ({ chatId, colorScheme, createMessage }) => {
+const Chat = ({ chatId, createMessage, label, form }) => {
+
+  const colorScheme = (new ChatColorScheme(chatId)).getScheme()
 
   let editor = null
   let holderRef = null
   let submitRef = null
-  let backgroundClass = ""
-
-  switch (colorScheme) {
-    case 'red-theme':
-      backgroundClass = "bg-danger"
-      break;
-    case 'blue-theme':
-      backgroundClass = "bg-primary"
-      break;
-    default:
-      backgroundClass = "bg-default"
-  }
 
   const addBtnClick = () => {
     submitRef.style.display = 'block'
@@ -29,7 +21,7 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
       editor.destroy()
 
     editor = new JSONEditor(holderRef, {
-      schema: formSchema(chatId),
+      schema: form,
       theme: 'bootstrap4'
     })
   }
@@ -45,19 +37,26 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
 
   return (
     <Card>
-      <CardHeader className={backgroundClass}>
+      <CardHeader className={colorScheme.item.bg}>
+        <div className={css(styles.labelContainer)}>
+          <div className={css(styles.label)}>
+            <Button color="link" className={css(styles.labelButton)}>
+              <strong className={colorScheme.item.text}>{label}</strong>
+            </Button>
+          </div>
+        </div>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
-            <Button onClick={addBtnClick}>Add >></Button>
+            <Button color={colorScheme.item.btn} onClick={addBtnClick}>Add >></Button>
           </InputGroupAddon>
         </InputGroup>
       </CardHeader>
-      <CardBody>
+      <CardBody className={colorScheme.global.body}>
         <div className="messages">
           <Messages chatId={chatId}/>
         </div>
       </CardBody>
-      <CardFooter>
+      <CardFooter className={colorScheme.global.footer}>
         <div ref={holder => { holderRef = holder }}/>
         <div style={{display: 'none'}} ref={submit => { submitRef = submit }}>
           <Button onClick={sendMessage}>Send</Button>
@@ -69,7 +68,8 @@ const Chat = ({ chatId, colorScheme, createMessage }) => {
 
 Chat.propTypes = {
   chatId: PropTypes.string.isRequired,
-  colorScheme: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  form: PropTypes.object.isRequired,
   createMessage: PropTypes.func.isRequired
 }
 
