@@ -3,16 +3,12 @@ import PropTypes from 'prop-types'
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import MessageColorScheme from '../../../defaults/schemeColors/messageScheme'
+import classNames from 'classnames/bind'
 
 class ChatMessages extends Component {
   constructor(props, content) {
     super(props, content)
-
-    this.colorScheme = {
-      red: "bg-danger",
-      blue: "bg-primary",
-      white: "bg-secondary"
-    }
 
     this.timeId = null
     this.scrolledDown = true
@@ -48,8 +44,7 @@ class ChatMessages extends Component {
 
   renderItem(message) {
     const fromChat = message.from === this.props.chatId
-
-    let color = this.colorScheme[message.from]
+    const colorScheme = (new MessageColorScheme(message.from)).getItemScheme()
     let itemStyles = {}
 
     if(fromChat) {
@@ -60,8 +55,8 @@ class ChatMessages extends Component {
       <div style={itemStyles}>
         <div className={css(styles.item)}>
           <div className={css(styles.badge, (!fromChat) && styles.badgeLeft)}>
-            <div className={css(styles.badgeBg) + ' ' + color}/>
-            <div className={css(styles.message)}>
+            <div className={classNames(css(styles.badgeBg), colorScheme.bg)}/>
+            <div className={classNames(css(styles.message), colorScheme.text)}>
               {message.title || '(empty message)'}
             </div>
           </div>

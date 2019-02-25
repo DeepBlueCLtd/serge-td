@@ -1,8 +1,8 @@
 import { persistentReducer } from 'redux-pouchdb-rethink'
-import formSchema, { schemaKeys } from '../defaults/messageTypes'
+import getMessageTypes from '../defaults/messageTypes'
 import getDb from '../databases'
 
-const initialState = schemaKeys.map(schema => formSchema(schema))
+const initialState = getMessageTypes()
 
 const messageTypes = (state = initialState, action) => {
 

@@ -1,8 +1,8 @@
-import { getToFromKeys } from './allowedChats'
-const chats = getToFromKeys()
+import { getToKeys, getFromKeys } from './allowedChats'
 
 const form = {
   "type": "object",
+  "format": "grid",
   "required": [
     "from",
     "to",
@@ -11,11 +11,11 @@ const form = {
   "properties": {
     "from": {
       "type": "string",
-      "enum": chats
+      "enum": getFromKeys()
     },
     "to": {
       "type": "string",
-      "enum": chats
+      "enum": getToKeys()
     },
     "title": {
       "type": "string",
@@ -24,8 +24,9 @@ const form = {
   }
 }
 
-const properties = {
-  "height": {
+const properties = [
+  {
+    "scheme": "height",
     "title": "PersonHeight",
     "properties": {
       "height": {
@@ -34,7 +35,8 @@ const properties = {
       }
     }
   },
-  "weight": {
+  {
+    "scheme": "weight",
     "title": "PersonWeight",
     "properties": {
       "weight": {
@@ -43,7 +45,8 @@ const properties = {
       }
     }
   },
-  "color": {
+  {
+    "scheme": "color",
     "title": "PersonColor",
     "properties": {
       "color": {
@@ -51,28 +54,36 @@ const properties = {
         "format": "color"
       }
     }
+  },
+  {
+    "scheme": "name",
+    "title": "PersonName",
+    "properties": {
+      "name": {
+        "type": "string",
+        "format": "string",
+        "default": ""
+      }
+    }
   }
-}
+]
 
-export const schemaKeys = ["height", "weight", "color"]
-
-const getSchema = (schemaKey) => {
-  if(schemaKeys.includes(schemaKey)) {
+const getMessageTypes = () => {
+  return properties.map(prop => {
     return {
       ...form,
-      title: properties[schemaKey].title,
+      scheme: prop.scheme,
+      title: prop.title,
       properties: {
         ...form.properties,
-        ...properties[schemaKey].properties
+        ...prop.properties
       },
       required: [
         ...form.required,
-        schemaKey
+        prop.scheme
       ]
     }
-  }
-
-  return form
+  })
 }
 
-export default getSchema
+export default getMessageTypes
