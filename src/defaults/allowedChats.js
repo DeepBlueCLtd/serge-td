@@ -1,38 +1,44 @@
 const defaultOptions = {
   showOnGameControlCreateChats: true,
-  addChatIdToChatToFromArray: true
+  addChatIdToChatFromArray: true,
+  addChatIdToChatToArray: true,
+  preFillFrom: false
 }
 
 const chats = [
   {
     chatId: "red",
-    title:"Red Chat",
-    color: "bg-danger",
+    label:"Red Chat",
     options: {
       ...defaultOptions
     }
   },
   {
     chatId: "blue",
-    title:"Blue Chat",
-    color: "bg-primary",
+    label:"Blue Chat",
     options: {
       ...defaultOptions
     }
   },
   {
     chatId: "white",
-    title:"White Chat",
-    color: "bg-default",
+    label:"White Chat",
     options: {
-      ...defaultOptions
+      ...defaultOptions,
+      addChatIdToChatToArray: false,
+      preFillFrom: true
     }
   }
 ]
 
-export const getToFromKeys = () => {
+export const getToKeys = () => {
   return chats
-          .filter(chat => chat.options.addChatIdToChatToFromArray)
+          .filter(chat => chat.options.addChatIdToChatToArray)
+          .map(chat => chat.chatId)
+}
+export const getFromKeys = () => {
+  return chats
+          .filter(chat => chat.options.addChatIdToChatFromArray)
           .map(chat => chat.chatId)
 }
 
