@@ -25,8 +25,8 @@ class ChatControll extends Component {
     }
   }
 
-  generateMessages() {
-    this.props.createMessages(Array.apply(null, Array(100)).map(() => {
+  generateMessages(count) {
+    this.props.createMessages(Array.apply(null, Array(count)).map(() => {
       const messageType = this.props.messageTypes[Math.floor(Math.random()*this.props.messageTypes.length)]
       return messageType.required.reduce((map, field) => {
 
@@ -134,7 +134,9 @@ class ChatControll extends Component {
                 </ListGroup>
               </CardBody>}
               <CardFooter>
-                <Button block color="success" onClick={this.generateMessages}>Generate Messages</Button>
+                <Button block color="success" onClick={() => {this.generateMessages(50)}}>Generate 50 Messages</Button>
+                <Button block color="success" onClick={() => {this.generateMessages(100)}}>Generate 100 Messages</Button>
+                <Button block color="success" onClick={() => {this.generateMessages(1000)}}>Generate 1000 Messages</Button>
               </CardFooter>
               <CardFooter>
                 <Button block color="danger" onClick={this.props.clearMessages}>Clear Messages</Button>
