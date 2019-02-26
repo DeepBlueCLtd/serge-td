@@ -1,14 +1,16 @@
 import { connect } from 'react-redux'
 import Chats from '../components/chatlist'
-// import { createChat } from '../actions/chat'
+import { chatAddBtnSettings } from '../defaults/messageTypesKeys'
 
-const mapStateToProps = stage => ({chats:stage.chats})
+const mapStateToProps = stage => ({
+  chats: stage.chats,
+  form: {
+    ...stage.messageTypes.find(type => (type.scheme === chatAddBtnSettings.scheme)),
+    format: chatAddBtnSettings.format
+  }
+})
 
 const mapDispatchToProps = dispatch => ({})
-
-// createMessage: (message) => {
-//   // dispatch(createMessage(message))
-// }
 
 const ChatsContainer = connect(
   mapStateToProps,
