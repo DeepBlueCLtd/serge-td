@@ -45,11 +45,7 @@ const Chat = ({ chatId, createMessage, label, form }) => {
             </Button>
           </div>
         </div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <Button color={colorScheme.item.btn} onClick={addBtnClick}>Add >></Button>
-          </InputGroupAddon>
-        </InputGroup>
+        <Button color={colorScheme.item.btn} onClick={addBtnClick}>Add >></Button>
       </CardHeader>
       <CardBody className={colorScheme.global.body}>
         <div className="messages">
