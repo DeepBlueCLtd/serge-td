@@ -15,7 +15,7 @@ class ChatMessages extends Component {
     this.loading = false
     this.scrolledDown = true
     this.scrollbar = createRef()
-    this.loadMoreCount = 2
+    this.loadMoreCount = 10
 
     this.onScrollUp = this.onScrollUp.bind(this)
     this.onYReachStart = this.onYReachStart.bind(this)
@@ -23,7 +23,7 @@ class ChatMessages extends Component {
     this.scrollToDown = this.scrollToDown.bind(this)
 
     this.state = {
-      showItemsCount: 4
+      showItemsCount: 10
     }
   }
 
@@ -65,8 +65,10 @@ class ChatMessages extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if(this.props.messages.length !== 0 && props.messages.length > this.state.showItemsCount && this.props.messages.length < props.messages.length)
-      this.setState({showItemsCount: this.state.showItemsCount + props.messages.length - this.props.messages.length })
+    if(this.props.messages.length !== 0 && props.messages.length > this.state.showItemsCount && this.props.messages.length < props.messages.length) {
+      let newItemsCount = props.messages.length - this.props.messages.length
+      this.setState({showItemsCount: this.state.showItemsCount + (newItemsCount > this.loadMoreCount ? this.loadMoreCount : newItemsCount) })
+    }
 
     this.scrollToDown()
   }
@@ -112,7 +114,7 @@ class ChatMessages extends Component {
             contentClassName={css(styles.scrolContent)}
           >
             <div className={css(styles.scrolContent)}>
-              {this.props.messages.slice(Math.max(this.props.messages.length - this.state.showItemsCount, 1)).map((msg, key) => (
+              {this.props.messages.slice(Math.max(this.props.messages.length - this.state.showItemsCount, 0)).map((msg, key) => (
                 <div key={key}>{this.renderItem(msg)}</div>
               ))}
             </div>
