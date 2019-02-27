@@ -11,12 +11,20 @@ class ChatMessages extends Component {
     super(props, content)
 
     this.timeId = null
+    this.loadTimeId = null
+    this.loading = false
     this.scrolledDown = true
     this.scrollbar = createRef()
+    this.loadMoreCount = 2
 
     this.onScrollUp = this.onScrollUp.bind(this)
+    this.onYReachStart = this.onYReachStart.bind(this)
     this.onYReachEnd = this.onYReachEnd.bind(this)
     this.scrollToDown = this.scrollToDown.bind(this)
+
+    this.state = {
+      showItemsCount: 4
+    }
   }
 
   onScrollUp() {
@@ -25,6 +33,24 @@ class ChatMessages extends Component {
 
   onYReachEnd() {
     this.scrolledDown = true
+  }
+
+  onYReachStart() {
+    const currentHeigth = this.scrollbar.current._container.scrollHeight
+
+    if(this.loadTimeId)
+      clearTimeout(this.loadTimeId)
+
+    this.loadTimeId = setTimeout(() => {
+      if(!this.scrolledDown && !this.loading) {
+        this.loading = true
+        this.setState({showItemsCount: this.state.showItemsCount + this.loadMoreCount})
+        setTimeout(() => {
+          this.scrollbar.current._container.scrollTop = this.scrollbar.current._container.scrollHeight - currentHeigth
+          this.loading = false
+        })
+      }
+    })
   }
 
   scrollToDown() {
@@ -38,7 +64,10 @@ class ChatMessages extends Component {
     })
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(props) {
+    if(this.props.messages.length !== 0 && props.messages.length > this.state.showItemsCount && this.props.messages.length < props.messages.length)
+      this.setState({showItemsCount: this.state.showItemsCount + props.messages.length - this.props.messages.length })
+
     this.scrollToDown()
   }
 
@@ -57,7 +86,11 @@ class ChatMessages extends Component {
           <div className={css(styles.badge, (!fromChat) && styles.badgeLeft)}>
             <div className={classNames(css(styles.badgeBg), colorScheme.bg)}/>
             <div className={classNames(css(styles.message), colorScheme.text)}>
-              {message.title || '(empty message)'}
+              {Object.keys(message).map(key => {
+                return (<div key={key}>
+                  <strong>{key}:</strong> {message[key]}
+                </div>)
+              })}
             </div>
           </div>
         </div>
@@ -73,12 +106,13 @@ class ChatMessages extends Component {
             ref={this.scrollbar}
             onYReachEnd={this.onYReachEnd}
             onScrollUp={this.onScrollUp}
+            onYReachStart={this.onYReachStart}
             suppressScrollX={true}
             className={css(styles.container)}
             contentClassName={css(styles.scrolContent)}
           >
             <div className={css(styles.scrolContent)}>
-              {this.props.messages.map((msg, key) => (
+              {this.props.messages.slice(Math.max(this.props.messages.length - this.state.showItemsCount, 1)).map((msg, key) => (
                 <div key={key}>{this.renderItem(msg)}</div>
               ))}
             </div>
