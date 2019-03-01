@@ -11,7 +11,7 @@ const Chatlist = ({ chats, form }) => {
       {chats.map((chat, key) => (chat &&
         <Col xs={chatSizes.xs} sm={chatSizes.sm} md={chatSizes.md} key={key}>
           <div className={css(styles.chatItem)}>
-            <Chat id={chat.id} label={chat.label} form={form}/>
+            <Chat chatId={chat.id} label={chat.label} form={form}/>
           </div>
         </Col>
       ))}
