@@ -38,11 +38,13 @@ export default StyleSheet.create({
   item: {
     display: 'inline-block',
     verticalAligin: 'top',
+    maxWidth: "100%",
   },
   scrolContent: {
     padding: '20px'
   },
   badge: {
+    maxWidth: "100%",
     fontSize: '16px',
     lineHeight: '20px',
     padding: '5px 15px',

@@ -23,7 +23,7 @@ class ChatMessages extends Component {
     this.scrollToDown = this.scrollToDown.bind(this)
 
     this.state = {
-      showItemsCount: 10
+      showItemsCount: 10,
     }
   }
 
@@ -74,6 +74,7 @@ class ChatMessages extends Component {
   }
 
   renderItem(message) {
+    if(!message) return ""
     const fromChat = message.from === this.props.chatId
     const colorScheme = (new MessageColorScheme(message.from)).getItemScheme()
     let itemStyles = {}
@@ -88,11 +89,7 @@ class ChatMessages extends Component {
           <div className={css(styles.badge, (!fromChat) && styles.badgeLeft)}>
             <div className={classNames(css(styles.badgeBg), colorScheme.bg)}/>
             <div className={classNames(css(styles.message), colorScheme.text)}>
-              {Object.keys(message).map(key => {
-                return (<div key={key}>
-                  <strong>{key}:</strong> {message[key]}
-                </div>)
-              })}
+              {Object.keys(message).map(key => (key.charAt(0) !== '_' && <div key={key}><strong>{key}:</strong> {message[key]}</div>))}
             </div>
           </div>
         </div>
@@ -115,7 +112,7 @@ class ChatMessages extends Component {
           >
             <div className={css(styles.scrolContent)}>
               {this.props.messages.slice(Math.max(this.props.messages.length - this.state.showItemsCount, 0)).map((msg, key) => (
-                <div key={key}>{this.renderItem(msg)}</div>
+                <div key={key}>{this.renderItem(msg.doc)}</div>
               ))}
             </div>
           </PerfectScrollbar>
@@ -126,12 +123,8 @@ class ChatMessages extends Component {
 }
 
 ChatMessages.propTypes = {
-  messages: PropTypes.array,
+  messages: PropTypes.array.isRequired,
   chatId: PropTypes.string.isRequired
-}
-
-ChatMessages.defaultValues = {
-  messages: []
 }
 
 export default ChatMessages

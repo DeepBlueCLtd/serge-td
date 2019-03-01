@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Card, CardHeader, CardFooter, CardBody, Button, InputGroup, InputGroupAddon  } from 'reactstrap'
 import PropTypes from 'prop-types'
 import JSONEditor from '@json-editor/json-editor'
@@ -6,70 +6,106 @@ import Messages from '../../containers/messages'
 import ChatColorScheme from '../../defaults/schemeColors/chatScheme'
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
+import getDb from '../../databases'
+import { query } from '../../databases/views'
+import { changes } from '../../databases/filters'
 
-const Chat = ({ chatId, createMessage, label, form }) => {
+class Chat extends Component {
+  constructor(props, content) {
+    super(props, content)
 
-  const colorScheme = (new ChatColorScheme(chatId)).getScheme()
+    this.updateState = this.updateState.bind(this)
+    this.sendMessage = this.sendMessage.bind(this)
+    this.addBtnClick = this.addBtnClick.bind(this)
 
-  let editor = null
-  let holderRef = null
-  let submitRef = null
+    this.colorScheme = (new ChatColorScheme(props.chatId)).getScheme()
+    this.db = getDb('messages')
+    this.editor = null
+    this.holderRef = React.createRef()
+    this.submitRef = React.createRef()
+    this.changeTimer = null
+  }
 
-  const addBtnClick = () => {
-    submitRef.style.display = 'block'
-    if(editor)
-      editor.destroy()
+  addBtnClick() {
+    this.submitRef.current.style.display = 'block'
 
-    editor = new JSONEditor(holderRef, {
-      schema: form,
+    if(this.editor)
+      this.editor.destroy()
+    console.log(this.holderRef.current);
+    this.editor = new JSONEditor(this.holderRef.current, {
+      schema: this.props.form,
       theme: 'bootstrap4'
     })
   }
 
-  const sendMessage = () => {
-    let errors = editor.validate()
+  componentWillMount() {
+    console.log('messages/' + this.props.chatId);
+
+      // this.db.changes({
+      //   include_docs: true
+      // }).on('change', res => {
+      //   this.updateState()
+      //   console.log(res);
+      // })
+    this.updateState(() => {
+      changes(this.db, 'messages/' + this.props.chatId, () => {
+        console.log("test");
+        this.updateState()
+      })
+    })
+  }
+
+  updateState = (f) => {
+    if(this.changeTimer) clearTimeout(this.changeTimer)
+    query(this.db, 'messages/' + this.props.chatId, {include_docs: true}).then(({rows}) => {
+      this.props.updateMessages(rows || [], this.props.chatId)
+      if(typeof f === 'function') f()
+    })
+  }
+
+  sendMessage() {
+    const errors = this.editor.validate()
     if(!errors.length) {
-      createMessage(editor.getValue())
-      editor.destroy()
-      submitRef.style.display = 'none'
+      this.props.createMessage(this.editor.getValue())
+      this.editor.destroy()
+      this.submitRef.current.style.display = 'none'
     }
   }
 
-  return (
-    <Card>
-      <CardHeader className={colorScheme.item.bg}>
-        <div className={css(styles.labelContainer)}>
-          <div className={css(styles.label)}>
-            <Button color="link" className={css(styles.labelButton)}>
-              <strong className={colorScheme.item.text}>{label}</strong>
-            </Button>
+  render() {
+    return (
+      <Card>
+        <CardHeader className={this.colorScheme.item.bg}>
+          <div className={css(styles.labelContainer)}>
+            <div className={css(styles.label)}>
+              <Button color="link" className={css(styles.labelButton)}>
+                <strong className={this.colorScheme.item.text}>{this.props.label}</strong>
+              </Button>
+            </div>
           </div>
-        </div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <Button color={colorScheme.item.btn} onClick={addBtnClick}>Add >></Button>
-          </InputGroupAddon>
-        </InputGroup>
-      </CardHeader>
-      <CardBody className={colorScheme.global.body}>
-        <div className="messages">
-          <Messages chatId={chatId}/>
-        </div>
-      </CardBody>
-      <CardFooter className={colorScheme.global.footer}>
-        <div ref={holder => { holderRef = holder }}/>
-        <div style={{display: 'none'}} ref={submit => { submitRef = submit }}>
-          <Button onClick={sendMessage}>Send</Button>
-        </div>
-      </CardFooter>
-    </Card>
-  )
+          <Button color={this.colorScheme.item.btn} onClick={this.addBtnClick}>Add >></Button>
+        </CardHeader>
+        <CardBody className={this.colorScheme.global.body}>
+          <div className="messages">
+            <Messages chatId={this.props.chatId}/>
+          </div>
+        </CardBody>
+        <CardFooter className={this.colorScheme.global.footer}>
+          <div ref={this.holderRef}/>
+          <div style={{display: 'none'}} ref={this.submitRef}>
+            <Button onClick={this.sendMessage}>Send</Button>
+          </div>
+        </CardFooter>
+      </Card>
+    )
+  }
 }
 
 Chat.propTypes = {
   chatId: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   form: PropTypes.object.isRequired,
+  updateMessages: PropTypes.func.isRequired,
   createMessage: PropTypes.func.isRequired
 }
 

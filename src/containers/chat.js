@@ -1,16 +1,17 @@
 import { connect } from 'react-redux'
 import Chat from '../components/chat'
-import { createMessages } from '../actions/messages'
+import { createMessages, updateMessages } from '../actions/messages'
 
-const mapStateToProps = (stage, { id }) => ({
-  chatId: id
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = dispatch => {
 
   return {
     createMessage: (message) => {
       dispatch(createMessages([message]))
+    },
+    updateMessages: (messages, chatId) => {
+      dispatch(updateMessages(messages, chatId))
     }
   }
 }
