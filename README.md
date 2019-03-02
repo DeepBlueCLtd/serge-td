@@ -1,6 +1,6 @@
 
 # serge-td
-Technical demonstrator for serge
+Technical demonstrator for serge.
 
 ## Available Scripts
 
