@@ -1,30 +1,20 @@
-/* pouchdb view management
- */
-
+import chats from '../defaults/allowedChats'
 const emit = () => {}
+
+// declare the messages views
+let messages = {}
+chats.forEach(({chatId}) => {
+  messages[chatId] = {
+    map: (doc => {
+      if((doc.to === "chatId" && doc.draft === false) || doc.from === "chatId")
+        emit(doc.id)
+    }).toString().replace(new RegExp("chatId", 'g'), chatId)
+  }
+})
 
 // declare the views
 const views = {
-  messages: {
-    blue: {
-      map: (doc => {
-        if(doc.to === 'blue' || doc.from === 'blue')
-          emit(doc.id)
-      }).toString(),
-    },
-    red: {
-      map: (doc => {
-        if(doc.to === 'red' || doc.from === 'red')
-          emit(doc.id)
-      }).toString(),
-    },
-    white: {
-      map: (doc => {
-        if(doc.from === 'white')
-          emit(doc.id)
-      }).toString(),
-    }
-  }
+  messages: messages
 }
 
 // query couchdb views
