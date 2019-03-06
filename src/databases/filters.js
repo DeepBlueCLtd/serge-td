@@ -1,13 +1,18 @@
+import chats from '../defaults/allowedChats'
 /* pouchdb filter management
  */
 
+ // declare the messages filters
+let messages = {}
+chats.forEach(({chatId}) => {
+  messages[chatId] = (doc => ((doc.to === "chatId" && doc.draft === false) || doc.from === "chatId"))
+                    .toString()
+                    .replace(new RegExp("chatId", 'g'), chatId)
+})
+
 // declare the filters
 const filters = {
-  messages: {
-    red: (doc => (doc.to === 'red' || doc.from === 'red')).toString(),
-    blue: (doc => (doc.to === 'blue' || doc.from === 'blue')).toString(),
-    white: (doc => (doc.from === 'white')).toString()
-  }
+  messages: messages
 }
 
 const prefix = 'filter'
