@@ -1,10 +1,8 @@
 import getDb from '../databases'
-import { updateMessages, PUSH_MESSAGES, REMOVE_ALL_MESSAGES, UPDATE_MESSAGES } from '../actions/messages'
-import { getGameControlChats } from '../defaults/allowedChats'
+import { SAVE_DRAFT, PUSH_MESSAGES, REMOVE_ALL_MESSAGES, UPDATE_MESSAGES, SEND_DRAFT_MESSAGE } from '../actions/messages'
 
 export const db = getDb('messages')
 let initialState = {}
-let changeTimer = null
 
 const messages = (state = initialState, action) => {
 
@@ -14,32 +12,64 @@ const messages = (state = initialState, action) => {
       if(messages.length === 1)
         db.put(messages[0])
       else {
-        db.bulkDocs(messages)
+        db.bulkDocs(messages).then(res => {
+          console.log(res);
+        })
       }
       return state
     case REMOVE_ALL_MESSAGES:
       db.allDocs().then(result => {
         return Promise.all(result.rows.map(row => {
-          return this.db.remove(row.id, row.value.rev);
+          if(row.id.search("_design") === -1) {
+            return db.remove(row.id, row.value.rev)
+          }
+          return false
         }));
       })
-      return state
+      return {}
     case UPDATE_MESSAGES:
-      let saveState = {...state}
       return {
         ...state,
         [action.payload.chatId]: action.payload.messages
       }
+    case SAVE_DRAFT:
+      let message = {
+        ...(initAdditionalAttributes([action.payload.message])[0]),
+        draft: true
+      }
+
+      if(action.payload.message._id)
+        message._id = action.payload.message._id
+
+      if(action.payload.message._rev)
+        message._rev = action.payload.message._rev
+
+      db.put(message)
+
+      return state
+    case SEND_DRAFT_MESSAGE:
+      db.get(action.payload.message._id).then(row => {
+        db.bulkDocs([
+          {...initAdditionalAttributes([action.payload.message])[0], _rev: ""},
+          {...row, _deleted: true}
+        ])
+      })
+      return state
     default:
       return state
   }
 }
 
+const getId = (key) => {
+  return new Date().toISOString() + "-" + (key || '0')
+}
+
 const initAdditionalAttributes = (messages) => {
-  return messages.map(message => {
+  return messages.map((message, key) => {
     return {
       ...message,
-      _id: new Date().toISOString(),
+      _id: getId(key),
+      draft: false
     }
   })
 }

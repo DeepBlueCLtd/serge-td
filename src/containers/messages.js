@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import Messages from '../components/chat/messages'
 
-const mapStateToProps = (stage, { chatId }) => {
+const mapStateToProps = (state, { chatId }) => {
   return {
-    messages: (stage.messages && Array.isArray(stage.messages[chatId])) ? stage.messages[chatId] : [],
+    messages: (state.messages && Array.isArray(state.messages[chatId])) ? state.messages[chatId] : [],
     chatId: chatId
   }
 }

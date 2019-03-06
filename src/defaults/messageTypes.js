@@ -62,7 +62,6 @@ const properties = [
       "name": {
         "type": "string",
         "format": "string",
-        "default": ""
       }
     }
   }
