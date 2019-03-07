@@ -11,11 +11,11 @@ chats.forEach(({chatId}) => {
 })
 
 // declare the filters
-const filters = {
+export const filters = {
   messages: messages
 }
 
-const prefix = 'filter'
+export const prefix = 'filter'
 
 // query couchdb filters
 export const changes = (db, filter, f, params) => {

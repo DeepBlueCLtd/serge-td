@@ -17,6 +17,7 @@ class ChatMessages extends Component {
     this.scrollbar = createRef()
     this.loadMoreCount = 10
 
+    this.getScrollHeight = this.getScrollHeight.bind(this)
     this.onScrollUp = this.onScrollUp.bind(this)
     this.onYReachStart = this.onYReachStart.bind(this)
     this.onYReachEnd = this.onYReachEnd.bind(this)
@@ -36,21 +37,25 @@ class ChatMessages extends Component {
   }
 
   onYReachStart() {
-    const currentHeigth = this.scrollbar.current._container.scrollHeight
 
     if(this.loadTimeId)
       clearTimeout(this.loadTimeId)
 
     this.loadTimeId = setTimeout(() => {
+      const currentHeigth = this.getScrollHeight()
       if(!this.scrolledDown && !this.loading) {
         this.loading = true
         this.setState({showItemsCount: this.state.showItemsCount + this.loadMoreCount})
         setTimeout(() => {
-          this.scrollbar.current._container.scrollTop = this.scrollbar.current._container.scrollHeight - currentHeigth
+          this.scrollbar.current._container.scrollTop = this.getScrollHeight() - currentHeigth
           this.loading = false
         })
       }
     })
+  }
+
+  getScrollHeight() {
+    return this.scrollbar.current ? this.scrollbar.current._container.scrollHeight : 0
   }
 
   scrollToDown() {
@@ -59,7 +64,7 @@ class ChatMessages extends Component {
 
     this.timeId = setTimeout(() => {
       if(this.scrolledDown) {
-        this.scrollbar.current._container.scrollTop = this.scrollbar.current._container.scrollHeight
+        this.scrollbar.current._container.scrollTop = this.getScrollHeight()
       }
     })
   }
