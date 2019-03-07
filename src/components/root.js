@@ -4,14 +4,17 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Homepage from './homepage'
+import CheckDb from './checkDb'
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-      </Switch>
-    </Router>
+    <CheckDb>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Homepage} />
+        </Switch>
+      </Router>
+    </CheckDb>
   </Provider>
 )
 
