@@ -12,9 +12,7 @@ const messages = (state = initialState, action) => {
       if(messages.length === 1)
         db.put(messages[0])
       else {
-        db.bulkDocs(messages).then(res => {
-          console.log(res);
-        })
+        db.bulkDocs(messages)
       }
       return state
     case REMOVE_ALL_MESSAGES:

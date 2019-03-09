@@ -28,6 +28,10 @@ class ChatMessages extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.loadTimeId)
+  }
+
   onScrollUp() {
     this.scrolledDown = false
   }
@@ -47,7 +51,8 @@ class ChatMessages extends Component {
         this.loading = true
         this.setState({showItemsCount: this.state.showItemsCount + this.loadMoreCount})
         setTimeout(() => {
-          this.scrollbar.current._container.scrollTop = this.getScrollHeight() - currentHeigth
+          if(this.scrollbar.current)
+            this.scrollbar.current._container.scrollTop = this.getScrollHeight() - currentHeigth
           this.loading = false
         })
       }
@@ -94,7 +99,7 @@ class ChatMessages extends Component {
           <div className={css(styles.badge, (!fromChat) && styles.badgeLeft)}>
             <div className={classNames(css(styles.badgeBg), colorScheme.bg)}/>
             <div className={classNames(css(styles.message), colorScheme.text)}>
-              {Object.keys(message).map(key => (key.charAt(0) !== '_' && <div key={key}><strong>{key}:</strong> {message[key]}</div>))}
+              {Object.keys(message).map(key => (key.charAt(0) !== '_' && message[key] && <div key={key}><strong>{key}:</strong> {message[key]}</div>))}
             </div>
           </div>
         </div>

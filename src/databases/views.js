@@ -13,7 +13,7 @@ chats.forEach(({chatId}) => {
 })
 
 // declare the views
-const views = {
+export const views = {
   messages: messages
 }
 
