@@ -22,6 +22,7 @@ class ChatMessages extends Component {
     this.onYReachStart = this.onYReachStart.bind(this)
     this.onYReachEnd = this.onYReachEnd.bind(this)
     this.scrollToDown = this.scrollToDown.bind(this)
+    this.firstScrolled = false
 
     this.state = {
       showItemsCount: 10,
@@ -68,8 +69,16 @@ class ChatMessages extends Component {
       clearTimeout(this.timeId)
 
     this.timeId = setTimeout(() => {
-      if(this.scrolledDown) {
+      if(this.scrollbar.current) {
         this.scrollbar.current._container.scrollTop = this.getScrollHeight()
+        this.firstScrolled = true
+      }
+      else {
+        if(!this.firstScrolled) {
+          this.timeId = setTimeout(() => {
+            this.scrollToDown()
+          }, 512)
+        }
       }
     })
   }
