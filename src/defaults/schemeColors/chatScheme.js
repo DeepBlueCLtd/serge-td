@@ -1,5 +1,6 @@
 import { bg, buttons, text } from './theme'
 import ColorScheme from './scheme'
+import cn from 'classnames'
 
 class ChatScheme extends ColorScheme {
 
@@ -25,7 +26,9 @@ class ChatScheme extends ColorScheme {
 
     this.global = {
       body: bg.white,
-      footer: bg.light
+      footer: bg.light,
+      tab: bg.white,
+      activeTab: cn(bg.blue, text.white),
     }
   }
 }
