@@ -6,6 +6,10 @@ Technical demonstrator for serge
 
 In the project directory, you can run:
 
+### `heroku local`
+
+If you have local [heroku](https://devcenter.heroku.com/articles/heroku-cli) you can use this command and it will install all dependencies, generate configuration files and run project
+
 ### `npm i`
 
 Install or update all packages and dependencies.
