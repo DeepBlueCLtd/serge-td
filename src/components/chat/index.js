@@ -66,9 +66,7 @@ class Chat extends Component {
       <Card>
         <Header colorScheme={this.state.colorScheme} button="Add >>" chatId={this.props.chatId}>{this.props.label}</Header>
         <CardBody className={this.state.colorScheme.global.body}>
-          <div className="messages">
-            <Messages chatId={this.props.chatId}/>
-          </div>
+          <Messages chatId={this.props.chatId}/>
         </CardBody>
         <Footer colorScheme={this.state.colorScheme} button="Send" chatId={this.props.chatId}/>
       </Card>
