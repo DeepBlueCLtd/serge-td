@@ -4,6 +4,13 @@ Technical demonstrator for serge
 
 ## Available Scripts
 
+If you have local installed heroku you can use this command and it will install all dependencies, generate configuration files and run project
+
+**https://devcenter.heroku.com/articles/heroku-local**
+
+### `heroku local`
+
+
 In the project directory, you can run:
 
 ### `npm i`
