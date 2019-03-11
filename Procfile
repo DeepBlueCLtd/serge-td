@@ -1,1 +1,1 @@
-web: npm run cfgen & npm start 
+web: cd ./client & npm i & npm run cfgen & npm run build & cd .. & npm start
