@@ -5,7 +5,7 @@ export const db = getDb('messages')
 let initialState = {}
 
 const messages = (state = initialState, action) => {
-
+  console.log(action);
   switch (action.type) {
     case PUSH_MESSAGES:
       let messages = initAdditionalAttributes(action.payload.messages)
