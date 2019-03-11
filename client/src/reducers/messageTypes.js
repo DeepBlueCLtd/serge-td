@@ -14,4 +14,4 @@ const messageTypes = (state = initialState, action) => {
 
 const db = getDb('message-types')
 
-export default persistentReducer(messageTypes, {db: db})
+export default persistentReducer(messageTypes, {db: db, name: "message-types"})

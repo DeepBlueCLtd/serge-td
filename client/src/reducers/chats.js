@@ -18,4 +18,4 @@ const chats = (state = initialState, action) => {
 
 const db = getDb('chats')
 
-export default persistentReducer(chats, {db: db})
+export default persistentReducer(chats, {db: db, name: "chats"})

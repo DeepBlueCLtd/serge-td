@@ -66,7 +66,7 @@ class CheckDb extends Component {
           this.checkFilter(filters, prefix, filterKeys, currentKey + 1)
         })
       }
-    }).catch(({ status, docId }) => {
+    }).catch(({ status }) => {
       if(status === 404) {
         console.log(`Creating Filters ${docId}`)
         db.put({
@@ -114,7 +114,7 @@ class CheckDb extends Component {
           this.checkView(views, viewKeys, currentKey + 1)
         })
       }
-    }).catch(({ status, docId }) => {
+    }).catch(({ status }) => {
       if(status === 404) {
         console.log(`Creating Views ${docId}`)
         db.put({
