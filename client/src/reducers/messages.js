@@ -1,11 +1,11 @@
 import getDb from '../databases'
 import { SAVE_DRAFT, PUSH_MESSAGES, REMOVE_ALL_MESSAGES, UPDATE_MESSAGES, SEND_DRAFT_MESSAGE } from '../actions/messages'
 
-export const db = getDb('messages')
+export const db = getDb('messages', true)
 let initialState = {}
 
 const messages = (state = initialState, action) => {
-  console.log(action);
+
   switch (action.type) {
     case PUSH_MESSAGES:
       let messages = initAdditionalAttributes(action.payload.messages)
