@@ -17,7 +17,7 @@ options = {
 
 PouchDB.plugin(pouchdbFullSync)
 
-const getDb = (dbKey, optionsManual) => {
+const getDb = (dbKey, sync, optionsManual) => {
 
   if(!options[dbKey] && !optionsManual)
     return new PouchDB(dbKey)
@@ -28,7 +28,7 @@ const getDb = (dbKey, optionsManual) => {
 
   const db = new PouchDB(optLoc.name || dbKey)
 
-  if(optLoc.remote) {
+  if(optLoc.remote && sync) {
     const remoteDB = new PouchDB(optLoc.remote)
     db.fullySync(remoteDB, {
       live: optLoc.live,
