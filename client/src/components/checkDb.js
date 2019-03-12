@@ -39,7 +39,7 @@ class CheckDb extends Component {
       return false
     }
 
-    const db = getDb(filterKeys[currentKey], {live: false})
+    const db = getDb(filterKeys[currentKey], false, {live: false})
 
     const docId = '_design/' + prefix + filterKeys[currentKey]
 
@@ -89,7 +89,7 @@ class CheckDb extends Component {
     }
 
     const docId = '_design/' + viewKeys[currentKey]
-    const db = getDb(viewKeys[currentKey], {live: false})
+    const db = getDb(viewKeys[currentKey], false, {live: false})
 
     db.get(docId).then(row => {
       let equal = true
@@ -115,6 +115,7 @@ class CheckDb extends Component {
         })
       }
     }).catch(({ status }) => {
+      console.log("test", status);
       if(status === 404) {
         console.log(`Creating Views ${docId}`)
         db.put({
