@@ -32,7 +32,7 @@ const getDb = (dbKey, sync, optionsManual) => {
     const remoteDB = new PouchDB(optLoc.remote)
     db.fullySync(remoteDB, {
       live: optLoc.live,
-      retry: optLoc.retry
+      // retry: optLoc.retry
     })
   }
   return db
