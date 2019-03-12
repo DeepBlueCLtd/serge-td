@@ -1,5 +1,6 @@
 import PouchDB from 'pouchdb-browser'
 import pouchdbFullSync from 'pouchdb-full-sync'
+import upsert from 'pouchdb-upsert'
 import defaultOptions from './config-default.json'
 let options;
 
@@ -16,6 +17,7 @@ options = {
 }
 
 PouchDB.plugin(pouchdbFullSync)
+PouchDB.plugin(upsert)
 
 const getDb = (dbKey, sync, optionsManual) => {
 
@@ -30,9 +32,19 @@ const getDb = (dbKey, sync, optionsManual) => {
 
   if(optLoc.remote && sync) {
     const remoteDB = new PouchDB(optLoc.remote)
-    db.fullySync(remoteDB, {
+
+    db.replicate.to(remoteDB, {
       live: optLoc.live,
-      // retry: optLoc.retry
+      retry: optLoc.retry
+    }).on('complete', done => {
+      console.log('complete', done)
+    })
+
+    db.replicate.from(remoteDB, {
+      live: optLoc.live,
+      retry: optLoc.retry
+    }).on('complete', done => {
+      console.log('complete from', done)
     })
   }
   return db
