@@ -16,7 +16,7 @@ class Chat extends Component {
     this.changeTimer = null
     this.changeTime = 128
     this.updateState = this.updateState.bind(this)
-    this.db = getDb('messages')
+    this.db = getDb('messages', true)
     this.changes = changes(this.db, 'messages/' + props.chatId)
 
     this.state = {
