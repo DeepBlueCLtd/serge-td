@@ -9,7 +9,7 @@
     "name": "messages",
     "remote": "https://serge-td.herokuapp.com/db/messages",
     "live": true,
-    "retry": true
+    "retry": false
   },
   "message-types": {
     "name": "message-types",
