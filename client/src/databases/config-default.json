@@ -7,7 +7,7 @@
   },
   "messages": {
     "name": "messages",
-    "remote": "http://localhost:8080/db/messages",
+    "remote": "https://serge-td.herokuapp.com/db/messages",
     "live": true,
     "retry": false
   },
