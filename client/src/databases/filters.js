@@ -5,9 +5,7 @@ import chats from '../defaults/allowedChats'
  // declare the messages filters
 let messages = {}
 chats.forEach(({chatId}) => {
-  messages[chatId] = (doc => ((doc.to === "chatId" && doc.draft === false) || doc.from === "chatId"))
-                    .toString()
-                    .replace(new RegExp("chatId", 'g'), chatId)
+  messages[chatId] = `function (doc) { return doc.to === "${chatId}" && doc.draft === false || doc.from === "${chatId}"; }`
 })
 
 // declare the filters
