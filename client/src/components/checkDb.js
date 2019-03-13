@@ -47,7 +47,7 @@ class CheckDb extends Component {
       let equal = true
       if(row.filters) {
         Object.keys(filters[filterKeys[currentKey]]).forEach(key => {
-          if(!row.filters[key] || filters[filterKeys[currentKey]][key] !== row.filters[key])
+          if(!row.filters[filterKeys[currentKey]] || filters[filterKeys[currentKey]][key] !== row.filters[key])
             equal = false
         })
       }
@@ -95,7 +95,7 @@ class CheckDb extends Component {
       let equal = true
       if(row.views) {
         Object.keys(views[viewKeys[currentKey]]).forEach(key => {
-          if(!row.views[key] || views[viewKeys[currentKey]][key].map !== row.views[key].map)
+          if(!row.views[viewKeys[currentKey]] || views[viewKeys[currentKey]][key].map !== row.views[key].map)
             equal = false
         })
       }
