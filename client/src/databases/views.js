@@ -1,14 +1,10 @@
 import chats from '../defaults/allowedChats'
-const emit = () => {}
 
 // declare the messages views
 let messages = {}
 chats.forEach(({chatId}) => {
   messages[chatId] = {
-    map: (doc => {
-      if((doc.to === "chatId" && doc.draft === false) || doc.from === "chatId")
-        emit(doc.id)
-    }).toString().replace(new RegExp("chatId", 'g'), chatId)
+    map: `function (doc) { if(doc.to === "${chatId}" && doc.draft === false || doc.from === "${chatId}") emit(doc.id); }`
   }
 })
 

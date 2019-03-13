@@ -1,6 +1,4 @@
 import PouchDB from 'pouchdb-browser'
-import pouchdbFullSync from 'pouchdb-full-sync'
-import upsert from 'pouchdb-upsert'
 import defaultOptions from './config-default.json'
 let options;
 
@@ -15,9 +13,6 @@ options = {
   ...defaultOptions,
   ...options
 }
-
-PouchDB.plugin(pouchdbFullSync)
-PouchDB.plugin(upsert)
 
 const getDb = (dbKey, sync, optionsManual) => {
 
