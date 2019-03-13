@@ -47,8 +47,6 @@ class CheckDb extends Component {
       let equal = true
       if(row.filters) {
         Object.keys(filters[filterKeys[currentKey]]).forEach(key => {
-          console.log(filters);
-
           if(!row.filters[key] || filters[filterKeys[currentKey]][key] !== row.filters[key])
             equal = false
         })
