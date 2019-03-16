@@ -4,6 +4,8 @@ import { Row, Col, Card, CardHeader, CardBody, CardFooter, Button, ListGroup, Li
 import JSONEditor from '@json-editor/json-editor'
 import loremIpsum from 'lorem-ipsum'
 import { getGameControlChats } from '../../defaults/allowedChats'
+import RewindForm from './rewindForm'
+import RewindList from '../../containers/rewinds'
 
 import { css } from 'aphrodite/no-important'
 import styles from './styles'
@@ -110,6 +112,25 @@ class ChatControll extends Component {
                   ))}
                 </ListGroup>
               </CardBody>
+              <CardBody>
+                <p>Create rewind point:</p>
+                <ListGroup>
+                  <ListGroupItem>
+
+                  </ListGroupItem>
+                  {this.props.messageTypes.map((schema, key) => (
+                    <ListGroupItem
+                      key={key}
+                      tag="button"
+                      active={key === parseInt(this.state.activeSchema)}
+                      onClick={this.newMessageForm}
+                      name={key}
+                    >
+                      {schema.title}
+                    </ListGroupItem>
+                  ))}
+                </ListGroup>
+              </CardBody>
               {(!!this.state.createChats.length) && <CardBody>
                 <p>Create chats:</p>
                 <ListGroup>
@@ -133,6 +154,8 @@ class ChatControll extends Component {
                   })}
                 </ListGroup>
               </CardBody>}
+              <RewindForm createRewindPoint={this.props.createRewindPoint}/>
+              <RewindList/>
               <CardFooter>
                 <Button block color="success" onClick={() => {this.generateMessages(50)}}>Generate 50 Messages</Button>
                 <Button block color="success" onClick={() => {this.generateMessages(100)}}>Generate 100 Messages</Button>
@@ -164,6 +187,7 @@ class ChatControll extends Component {
 ChatControll.propTypes = {
   messageTypes: PropTypes.array,
   clearMessages: PropTypes.func.isRequired,
+  createRewindPoint: PropTypes.func.isRequired,
   createMessages: PropTypes.func.isRequired,
   createChat: PropTypes.func.isRequired,
   removeChat: PropTypes.func.isRequired,

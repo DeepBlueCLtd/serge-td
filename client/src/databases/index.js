@@ -9,7 +9,7 @@ catch (e) {
  options = {}
 }
 
-options = {
+options = { 
   ...defaultOptions,
   ...options
 }
