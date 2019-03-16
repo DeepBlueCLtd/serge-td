@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { createMessages, removeAllMessages } from '../actions/messages'
 import { createChat, removeChat } from '../actions/chats'
+import { createRewindPoint } from '../actions/rewindPoints'
 import { showOnGameControl } from '../defaults/messageTypesKeys'
 
 import Control from '../components/control'
@@ -24,7 +25,10 @@ const mapDispatchToProps = dispatch => {
     },
     removeChat: (id) => {
       dispatch(removeChat(id))
-    }
+    },
+    createRewindPoint: (pointName) => {
+      dispatch(createRewindPoint(pointName, 'messages'))
+    },
   }
 }
 
