@@ -12,7 +12,7 @@ In the project directory, you can run:
 Install or update all packages and dependencies.
 Recommends to run it after git pull requests.
 
-### `npm run install-saved-modules`
+### `npm run offline-install`
 
 Install last saved packages and dependencies for offline installation.
 
