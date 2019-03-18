@@ -23,6 +23,6 @@ export const changes = (db, filter, params) => {
     include_docs: true,
     filter: prefix + filter
   })
-}
+} 
 
 export default filters

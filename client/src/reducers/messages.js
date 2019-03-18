@@ -15,7 +15,7 @@ const messages = (state = initialState, action) => {
         db.bulkDocs(messages)
       }
       return state
-    case REMOVE_ALL_MESSAGES:
+    case REMOVE_ALL_MESSAGES: 
       db.allDocs().then(result => {
         return Promise.all(result.rows.map(row => {
           if(row.id.search("_design") === -1) {
