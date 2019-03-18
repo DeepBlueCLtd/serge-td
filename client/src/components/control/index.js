@@ -112,25 +112,6 @@ class ChatControll extends Component {
                   ))}
                 </ListGroup>
               </CardBody>
-              <CardBody>
-                <p>Create rewind point:</p>
-                <ListGroup>
-                  <ListGroupItem>
-
-                  </ListGroupItem>
-                  {this.props.messageTypes.map((schema, key) => (
-                    <ListGroupItem
-                      key={key}
-                      tag="button"
-                      active={key === parseInt(this.state.activeSchema)}
-                      onClick={this.newMessageForm}
-                      name={key}
-                    >
-                      {schema.title}
-                    </ListGroupItem>
-                  ))}
-                </ListGroup>
-              </CardBody>
               {(!!this.state.createChats.length) && <CardBody>
                 <p>Create chats:</p>
                 <ListGroup>
