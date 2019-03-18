@@ -14,7 +14,7 @@
   "devDependencies": {},
   "scripts": {
     "offline-install": "cd ./offline && node install-modules",
-    "save-modules": "npm install --production && cd ./offline && node save-modules",
+    "save-modules": "npm install --production && cd ./client && npm install --production && cd ../offline && node save-modules",
     "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run cfgen-force && npm run build",
     "start": "node server.js"
   },
