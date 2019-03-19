@@ -16,5 +16,11 @@
     "remote": null,
     "live": false,
     "retry": false
+  },
+  "rewind-points": {
+    "name": "rewind-points",
+    "remote": "https://serge-td.herokuapp.com/db/rewind-points",
+    "live": true,
+    "retry": false
   }
 }
