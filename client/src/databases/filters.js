@@ -3,7 +3,9 @@ import chats from '../defaults/allowedChats'
  */
 
  // declare the messages filters
-let messages = {}
+let messages = {
+  cloneFilter: 'function (doc) { return !doc._deleted; }'
+}
 chats.forEach(({chatId}) => {
   messages[chatId] = `function (doc) { return doc.to === "${chatId}" && doc.draft === false || doc.from === "${chatId}"; }`
 })
@@ -23,6 +25,6 @@ export const changes = (db, filter, params) => {
     include_docs: true,
     filter: prefix + filter
   })
-} 
+}
 
 export default filters
