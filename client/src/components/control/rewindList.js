@@ -16,7 +16,7 @@ const RewindList = ({ rewinds, removeRewindPoint, selectRewindPoint }) => {
             key={key}
             tag="button"
             active={doc.active}
-            onClick={() => selectRewindPoint(doc._id)}
+            onClick={() => {selectRewindPoint(doc._id)}}
           >
             {doc.name}
           </ListGroupItem>

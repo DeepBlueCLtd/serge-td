@@ -2,6 +2,8 @@ import getDb from '../databases'
 import { SAVE_DRAFT, PUSH_MESSAGES, REMOVE_ALL_MESSAGES, UPDATE_MESSAGES, SEND_DRAFT_MESSAGE } from '../actions/messages'
 
 export const db = getDb('messages', true)
+const dbClones = {}
+
 let initialState = {}
 
 const messages = (state = initialState, action) => {
@@ -15,7 +17,7 @@ const messages = (state = initialState, action) => {
         db.bulkDocs(messages)
       }
       return state
-    case REMOVE_ALL_MESSAGES: 
+    case REMOVE_ALL_MESSAGES:
       db.allDocs().then(result => {
         return Promise.all(result.rows.map(row => {
           if(row.id.search("_design") === -1) {

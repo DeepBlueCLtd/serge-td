@@ -5,7 +5,7 @@ import {
   // createTmpPoint,
   CREATE_REWIND_POINT,
   // REMOVE_REWIND_POINT,
-  // SELECT_REWIND_POINT
+  SELECT_REWIND_POINT
 } from '../../actions/rewindPoints'
 
 import { INIT } from  '../../actions/init'
@@ -21,6 +21,16 @@ const rewindPoints = (store, next, action, db, messagesDb) => {
           ...initAdditionalAttributes(action.payload),
           ...clonedData
         }).then(point => {
+          updateLocalRewindPoints(db, store)
+        })
+      })
+    break
+    case SELECT_REWIND_POINT:
+      db.allDocs({include_docs: true}).then(({ rows }) => {
+        const changedDocs = rows.filter(row => (row.doc.active || row.doc._id === action.payload.id))
+                                .map(item => ({...item.doc, active: !item.doc.active}))
+
+        db.bulkDocs(changedDocs).then(() => {
           updateLocalRewindPoints(db, store)
         })
       })
@@ -74,6 +84,7 @@ const init = (db, store) => {
 
 const updateLocalRewindPoints = (db, store) => {
   db.allDocs({include_docs: true}).then(({rows}) => {
+    console.log(rows);
     store.dispatch(updateRewindPoints(rows))
   })
 }
