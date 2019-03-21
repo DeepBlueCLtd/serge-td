@@ -9,10 +9,12 @@ catch (e) {
  options = {}
 }
 
-options = { 
+options = {
   ...defaultOptions,
   ...options
 }
+
+export const dbOptions = {...options}
 
 const getDb = (dbKey, sync, optionsManual) => {
 

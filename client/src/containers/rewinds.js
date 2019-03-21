@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import RewindList from '../components/control/rewindList'
-import { removeRewindPoint, selectRewindPoint, updateRewindPoints } from '../actions/rewindPoints'
+import { removeRewindPoint, selectRewindPoint } from '../actions/rewindPoints'
 
 const mapStateToProps = (state) => ({
   rewinds: state.rewindPoints.points,
@@ -8,9 +8,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateRewindPoints: (points) => {
-    dispatch(updateRewindPoints(points))
-  },
   removeRewindPoint: (id) => {
     dispatch(removeRewindPoint(id))
   },
