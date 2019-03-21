@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Homepage from './homepage'
 import CheckDb from './checkDb'
 import PouchStore from '../containers/pouchStore'
-
+ 
 const Root = ({ store }) => (
   <Provider store={store}>
     <PouchStore>
