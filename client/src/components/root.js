@@ -5,16 +5,19 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Homepage from './homepage'
 import CheckDb from './checkDb'
-
+import PouchStore from '../containers/pouchStore'
+ 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <CheckDb>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-        </Switch>
-      </Router>
-    </CheckDb>
+    <PouchStore>
+      <CheckDb>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+          </Switch>
+        </Router>
+      </CheckDb>
+    </PouchStore>
   </Provider>
 )
 

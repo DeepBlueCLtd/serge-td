@@ -7,7 +7,7 @@
   },
   "messages": {
     "name": "messages",
-    "remote": "https://serge-td.herokuapp.com/db/messages",
+    "remote": "http://localhost:8080/db/messages",
     "live": true,
     "retry": false
   },
@@ -15,6 +15,12 @@
     "name": "message-types",
     "remote": null,
     "live": false,
+    "retry": false
+  },
+  "rewind-points": {
+    "name": "rewind-points",
+    "remote": "http://localhost:8080//db/rewind-points",
+    "live": true,
     "retry": false
   }
 }

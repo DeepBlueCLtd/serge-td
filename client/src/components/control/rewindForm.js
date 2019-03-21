@@ -3,15 +3,27 @@ import PropTypes from 'prop-types'
 import { CardFooter, InputGroup, Button, InputGroupAddon, Input } from 'reactstrap'
 
 const RewindForm = ({createRewindPoint}) => {
-  let value = ""
+  const input = React.createRef()
+
+  const onFormSubmit = e => {
+    e.preventDefault()
+
+    if(input.current.value && input.current.value.length) {
+      createRewindPoint(input.current.value)
+      input.current.value = ""
+    }
+  }
+
   return (
     <CardFooter>
-      <InputGroup>
-        <Input onChange={event => {value = event.target.value}} placeholder="New rewind point"/>
-        <InputGroupAddon addonType="append">
-          <Button color="warning" onClick={() => { createRewindPoint(value) }}>Create</Button>
-        </InputGroupAddon>
-      </InputGroup>
+      <form onSubmit={onFormSubmit}>
+        <InputGroup>
+          <Input innerRef={input} placeholder="New rewind point"/>
+          <InputGroupAddon addonType="append">
+            <Button color="warning">Create</Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </form>
     </CardFooter>
   )
 }
