@@ -38,7 +38,7 @@ class Chat extends Component {
   initDatabase(chatId, activeRewind) {
     const isActiveRewind = activeRewind && activeRewind.doc.local !== this.dbName
     let newDb = !this.db
-    if(this.props.chatId !== chatId || isActiveRewind || newDb || this.props.activeRewind && !activeRewind) {
+    if(this.props.chatId !== chatId || isActiveRewind || newDb || (this.props.activeRewind && !activeRewind)) {
       if(this.changes) this.changes.cancel()
 
       if(isActiveRewind) {
