@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Card, CardHeader, CardBody, CardFooter, Button } from 'reactstrap'
+import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap'
 import { SchemaEditor } from '../../js-modules/json-schema-editor/editor'
 import PropTypes from 'prop-types'
+import JSONEditor from '@json-editor/json-editor'
 
 class JsonSchemaEditor extends Component {
 
@@ -29,19 +30,26 @@ class JsonSchemaEditor extends Component {
 
   componentDidMount() {
     this.schemaEditor = new SchemaEditor('schema-editor')
-    this.updateEditor(this.props.schema)
+    this.updateEditor(this.props.schema, this.props.options)
   }
 
-  componentWillReceiveProps({schema}) {
-      this.updateEditor(schema)
+  componentWillReceiveProps({schema, options}) {
+    this.updateEditor(schema, options)
   }
 
-  updateEditor(schema) {
+  updateEditor(schema, options) {
 
 
     try {
       const newJson = JSON.stringify(schema)
-      if(newJson !== this.save) {
+      if(newJson !== this.save || options.counter !== this.props.options.counter) {
+
+        JSONEditor.defaults.options.object_layout = options.layout
+        JSONEditor.defaults.options = {
+          ...JSONEditor.defaults.options,
+          ...options.booleanOptions
+        }
+
         this.save = newJson
         this.schemaEditor.updateSchema(schema)
         this.schemaEditor.jsonEditor.on('change', this.onChange)

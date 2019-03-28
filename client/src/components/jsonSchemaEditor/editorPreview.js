@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, CardHeader, CardBody, CardFooter, Button } from 'reactstrap'
+import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap'
 import { PreviewEditor } from '../../js-modules/json-schema-editor/editor'
 
 class EditorPreview extends Component {

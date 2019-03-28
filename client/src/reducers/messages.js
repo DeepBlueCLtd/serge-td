@@ -2,7 +2,7 @@ import getDb from '../databases'
 import { SAVE_DRAFT, PUSH_MESSAGES, REMOVE_ALL_MESSAGES, UPDATE_MESSAGES, SEND_DRAFT_MESSAGE } from '../actions/messages'
 
 export const db = getDb('messages', true)
-const dbClones = {}
+// const dbClones = {}
 
 let initialState = {}
 

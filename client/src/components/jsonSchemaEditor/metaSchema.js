@@ -16,7 +16,7 @@ class MetaSchema extends Component {
   }
 
   onChange(newValue, e) {
-    const editor = this.editorBox.current.editor; // The editor object is from Ace's API
+    // const editor = this.editorBox.current.editor; // The editor object is from Ace's API
     // console.log(editor.getValue()); // Outputs the value of the editor
   }
 

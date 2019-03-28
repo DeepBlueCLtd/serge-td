@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Homepage from './homepage'
-import MessageTypes from './messageTypes'
+import JsonSchemaEditor from './jsonSchemaEditor'
 import CheckDb from './checkDb'
 import PouchStore from '../containers/pouchStore'
 
@@ -15,7 +15,7 @@ const Root = ({ store }) => (
         <Router>
           <Switch>
             <Route exact path="/" component={Homepage} />
-            <Route path="/message-types" component={MessageTypes} />
+            <Route path="/json-schema-editor" component={JsonSchemaEditor} />
           </Switch>
         </Router>
       </CheckDb>
