@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@json-editor/json-editor/src/styles/starrating.css'
 import 'react-perfect-scrollbar/dist/css/styles.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 import reducers from './reducers'
 import { persistentStore } from 'redux-pouchdb-rethink'
 import thunk from 'redux-thunk'
@@ -16,7 +17,7 @@ import getDb from './databases'
 const applyMiddlewares = applyMiddleware(
   thunk, pouchdbSync
 )
-
+console.log(process.env.REACT_APP_ENV);
 const db = getDb('main')
 
 const createStoreWithMiddleware = composeWithDevTools(
