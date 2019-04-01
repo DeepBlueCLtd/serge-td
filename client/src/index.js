@@ -17,7 +17,7 @@ import getDb from './databases'
 const applyMiddlewares = applyMiddleware(
   thunk, pouchdbSync
 )
-
+console.log(process.env.REACT_APP_ENV);
 const db = getDb('main')
 
 const createStoreWithMiddleware = composeWithDevTools(

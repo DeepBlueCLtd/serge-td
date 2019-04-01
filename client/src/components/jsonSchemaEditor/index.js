@@ -8,6 +8,7 @@ import Editor from './jsonEditor'
 import Preview from './editorPreview'
 import SchemaView from './metaSchema'
 import Options from './options'
+import DevSection from '../devSection'
 
 class MessageTypes extends Component {
 
@@ -19,9 +20,33 @@ class MessageTypes extends Component {
     this.updateMetaSchema = this.updateMetaSchema.bind(this)
     this.updatePreviewSchema = this.updatePreviewSchema.bind(this)
     this.updateOptions = this.updateOptions.bind(this)
-    console.log(!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
+
     this.schemaEditor = null
     this.editorPreview = null
+
+    this.defaultValue = {
+      "type": "object",
+      "properties": {
+        "Date": {
+          "type": "string",
+          "format": "datetime-local"
+        },
+        "Status": {
+          "type": "string",
+          "enum": [
+            "Minor",
+            "Major",
+            "Critical"
+          ]
+        },
+        "Description": {
+          "type": "string",
+          "format": "textarea"
+        }
+      },
+      "title": "Machinery Failure",
+      "format": "grid"
+    }
 
     this.state = {
       metaSchema: jsonMetaSchema,
@@ -53,23 +78,30 @@ class MessageTypes extends Component {
       <div className={css(styles.main)}>
         <Container fluid>
           <Row>
-            <Col md={6} lg={3}>
+            <Col md={6}>
               <Editor
                 schema={this.state.metaSchema}
                 onChange={this.updatePreviewSchema}
                 options={this.state.options}
+                defaultValue={this.defaultValue}
               />
             </Col>
-            <Col md={6} lg={3}>
+            <Col md={6}>
               <Preview schema={this.state.previewSchema}/>
             </Col>
-            <Col md={6} lg={3}>
-              <Options options={this.state.options} onChange={this.updateOptions}/>
-            </Col>
-            <Col md={6} lg={3}>
-              <SchemaView value={this.state.metaSchema} onSchemaSubmit={this.updateMetaSchema}/>
-            </Col>
           </Row>
+          <DevSection>
+            <div className={css(styles.devSection)}>
+              <Row>
+                <Col md={6}>
+                  <Options options={this.state.options} onChange={this.updateOptions}/>
+                </Col>
+                <Col md={6}>
+                  <SchemaView value={this.state.metaSchema} onSchemaSubmit={this.updateMetaSchema}/>
+                </Col>
+              </Row>
+            </div>
+          </DevSection>
         </Container>
       </div>
     )

@@ -14,6 +14,7 @@ class JsonSchemaEditor extends Component {
     this.onChange = this.onChange.bind(this)
     this.updateEditor = this.updateEditor.bind(this)
     this.saved = ""
+    this.value = this.props.defaultValue
   }
 
   onChange(newValue, e) {
@@ -23,6 +24,7 @@ class JsonSchemaEditor extends Component {
     }
     else {
       if(this.props.onChange) {
+        this.value = this.schemaEditor.jsonEditor.getValue()
         this.props.onChange(this.schemaEditor.getJSON())
       }
     }
@@ -30,16 +32,14 @@ class JsonSchemaEditor extends Component {
 
   componentDidMount() {
     this.schemaEditor = new SchemaEditor('schema-editor')
-    this.updateEditor(this.props.schema, this.props.options)
+    this.updateEditor(this.props.schema, this.props.options, this.props.defaultValue)
   }
 
   componentWillReceiveProps({schema, options}) {
     this.updateEditor(schema, options)
   }
 
-  updateEditor(schema, options) {
-
-
+  updateEditor(schema, options, setValue) {
     try {
       const newJson = JSON.stringify(schema)
       if(newJson !== this.save || options.counter !== this.props.options.counter) {
@@ -52,6 +52,7 @@ class JsonSchemaEditor extends Component {
 
         this.save = newJson
         this.schemaEditor.updateSchema(schema)
+        this.schemaEditor.jsonEditor.setValue(this.value)
         this.schemaEditor.jsonEditor.on('change', this.onChange)
       }
     }
