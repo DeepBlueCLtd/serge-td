@@ -2,9 +2,11 @@ const express = require('express')
 const path = require('path')
 const PouchDB = require('pouchdb-core')
   .plugin(require('pouchdb-adapter-node-websql'))
-  .defaults({ adapter: 'websql' })
+  .defaults({
+    prefix: 'db/',
+    adapter: 'websql'
+  })
 
-var db = new PouchDB('db/mydb', {adapter: 'websql'});
 const cors = require('cors')
 
 const app = express()
