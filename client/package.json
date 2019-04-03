@@ -17,6 +17,7 @@
     "pouchdb-browser": "^7.0.0",
     "pouchdb-full-sync": "^1.0.5",
     "react": "^16.8.2",
+    "react-ace-editor": "0.0.3",
     "react-dom": "^16.8.2",
     "react-icons": "^3.4.0",
     "react-perfect-scrollbar": "^1.4.4",
