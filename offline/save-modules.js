@@ -1,23 +1,40 @@
 var AdmZip = require('./adm-zip');
-var zip;
+var Walk = require('./walk')
 
-console.log("Write Zip: backend modules");
-zip = new AdmZip();
-zip.addLocalFolder("../node_modules");
-zip.writeZip("./node_modules.zip");
-console.log("Write Zip: backend modules (success)");
+console.log('-------------------------------------------------------------');
+console.log('saving backend modules...');
+console.log('-------------------------------------------------------------');
 
-console.log("Write Zip: frontend modules");
-zip = new AdmZip()
-zip.addLocalFolder("../client/node_modules");
-zip.writeZip("./node_modules_frontend.zip");
-console.log("Write Zip: frontend modules (success)");
+Walk("../node_modules", "./node_modules_backend", true, function(error) {
+  if (error) {
+    throw error;
+  }
+  else {
+    console.log('-------------------------------------------------------------');
+    console.log('backend modules successfully saved.');
+    console.log('-------------------------------------------------------------');
+  }
 
+  console.log('-------------------------------------------------------------');
+  console.log('saving frontend modules...');
+  console.log('-------------------------------------------------------------');
 
-console.log("Write Zip: project");
-zip = new AdmZip()
-zip.addLocalFolder("../");
-zip.writeZip("../project.zip");
-console.log("Write Zip: project (success)");
-console.log("You can found it on project root directory");
-console.log("myProjectFolder/project.zip");
+  Walk("../client/node_modules", "./node_modules_frontend", true, function(error) {
+    if (error) {
+      throw error;
+    }
+    else {
+      console.log('-------------------------------------------------------------');
+      console.log('frontend modules successfully saved.');
+      console.log('-------------------------------------------------------------');
+    }
+
+    var zip = new AdmZip();
+    console.log("Write Zip: project");
+    zip.addLocalFolder("../");
+    zip.writeZip("../project.zip");
+    console.log("Write Zip: project (success)");
+    console.log("You can found it on project root directory");
+    console.log("myProjectFolder/project.zip");
+  });
+});

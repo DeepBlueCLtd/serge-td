@@ -1,12 +1,46 @@
-var AdmZip = require('./adm-zip');
-var zip;
+var Walk = require('./walk')
 
-console.log("installing backend modules");
-zip = new AdmZip('./node_modules.zip')
-zip.extractAllTo("../node_modules/", true);
-console.log("installing backend modules (success)");
+console.log('-------------------------------------------------------------');
+console.log('installing frontend modules...');
+console.log('-------------------------------------------------------------');
 
-console.log("installing frontend modules");
-zip = new AdmZip('./node_modules_frontend.zip')
-zip.extractAllTo("../client/node_modules/", true);
-console.log("installing frontend modules (success)");
+Walk("./node_modules_frontend", "../client/node_modules", false, function(error) {
+  if (error) {
+    throw error;
+  }
+  else {
+    console.log('-------------------------------------------------------------');
+    console.log('frontend modules successfully installed.');
+    console.log('-------------------------------------------------------------');
+  }
+
+  console.log('-------------------------------------------------------------');
+  console.log('installing backend modules...');
+  console.log('-------------------------------------------------------------');
+
+  Walk("./node_modules_backend", "../node_modules", false, function(error) {
+    if (error) {
+      throw error;
+    }
+    else {
+      console.log('-------------------------------------------------------------');
+      console.log('backend modules successfully installed.');
+      console.log('-------------------------------------------------------------');
+    }
+
+    console.log('-------------------------------------------------------------');
+    console.log('installing backend special changed modules for offline...');
+    console.log('-------------------------------------------------------------');
+
+    Walk("./node_modules_special", "../node_modules", false, function(error) {
+      if (error) {
+        throw error;
+      }
+      else {
+        console.log('-------------------------------------------------------------');
+        console.log('backend special changed modules for offline successfully installed.');
+        console.log('-------------------------------------------------------------');
+      }
+    });
+  });
+});
