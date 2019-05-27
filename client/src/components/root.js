@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Homepage from './homepage'
+import Export from '../containers/exportItems'
 import JsonSchemaEditor from './jsonSchemaEditor'
 import CheckDb from './checkDb'
 import PouchStore from '../containers/pouchStore'
@@ -15,6 +16,7 @@ const Root = ({ store }) => (
         <Router>
           <Switch>
             <Route exact path="/" component={Homepage} />
+            <Route path="/export" component={Export} />
             <Route path="/json-schema-editor" component={JsonSchemaEditor} />
           </Switch>
         </Router>

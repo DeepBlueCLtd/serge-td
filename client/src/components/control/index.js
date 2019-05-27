@@ -32,8 +32,9 @@ class ChatControll extends Component {
       const messageType = this.props.messageTypes[Math.floor(Math.random()*this.props.messageTypes.length)]
       return messageType.required.reduce((map, field) => {
 
+        map.type = messageType.scheme
         let value = ""
-        const enumArr = messageType.properties[field].enum;
+        const enumArr = messageType.properties[field].enum
         if(Array.isArray(enumArr) && enumArr.length) {
           value = enumArr[Math.floor(Math.random()*enumArr.length)]
         }
@@ -84,7 +85,7 @@ class ChatControll extends Component {
 
   injectForm() {
     if(!(this.editor.validate()).length) {
-      this.props.createMessages([this.editor.getValue()])
+      this.props.createMessages([{...this.editor.getValue(), type: this.editor.schema.scheme}])
       this.closeMessageForm()
     }
   }
@@ -141,6 +142,9 @@ class ChatControll extends Component {
                 <Button block color="success" onClick={() => {this.generateMessages(50)}}>Generate 50 Messages</Button>
                 <Button block color="success" onClick={() => {this.generateMessages(100)}}>Generate 100 Messages</Button>
                 <Button block color="success" onClick={() => {this.generateMessages(1000)}}>Generate 1000 Messages</Button>
+              </CardFooter>
+              <CardFooter>
+                <Button block color="primary" href="/export">Export Messages</Button>
               </CardFooter>
               <CardFooter>
                 <Button block color="danger" onClick={this.props.clearMessages}>Clear Messages</Button>
