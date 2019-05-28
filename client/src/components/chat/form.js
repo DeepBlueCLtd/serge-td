@@ -44,7 +44,7 @@ class ChatForm extends Component {
       if(messageFiltered[key])
         delete messageFiltered[key]
     })
-    
+
     return {
       form: formFiltered,
       values: messageFiltered
@@ -75,6 +75,7 @@ class ChatForm extends Component {
   submitForm() {
     if(!this.editor.validate().length)
       this.props.sendDraftMessage({
+        type: this.editor.schema.scheme,
         ...this.props.message,
         ...this.editor.getValue(),
       })

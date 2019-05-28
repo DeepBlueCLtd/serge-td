@@ -84,7 +84,6 @@ const init = (db, store) => {
 
 const updateLocalRewindPoints = (db, store) => {
   db.allDocs({include_docs: true}).then(({rows}) => {
-    console.log(rows);
     store.dispatch(updateRewindPoints(rows))
   })
 }
